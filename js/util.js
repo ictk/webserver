@@ -40,7 +40,7 @@
 		};
     function make_form(selector,input_info) {
       var input_unit_form = '<label for="{0}">{1}</label>     <input class="form-control  input-lg"		id="{0}" type="text">\n';
-      var str_form = '<div class="form-group" id={0}>\n{1}   \n <button type="button" id="{2}" class="btn btn-lg btn-primary">{3}</button> </div><br/><br/>';
+      var str_form = '<div class="form-group" id={0}>\n{1}   \n <button type="button" id="{2}" class="btn btn-lg btn-success">{3}</button> </div><br/><br/>';
       //0:group_id 1:input_str 2:id 3:lable
 
 

@@ -5,6 +5,7 @@
   <li><a href="sim_reg.html">giant_se sim reg</a></li>
   <li><a href="rd/nnbaboojmfbganncopiejdhpgnagciek">reirecting test</a></li>
   <li><a href="http://testmain.com">testmain.com</a></li>
+  <li><a href="test.html">테스트페이지</a></li>
   <li><a href="http://neo.test.com">neo.test.com</a></li>
   <li><a href="http://neo.test1.com">neo.test1.com</a></li>
   <li><a href="http://neo.test2.com">neo.test2.com</a></li>

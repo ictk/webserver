@@ -24,396 +24,203 @@
 
 	<script type="text/javascript">
 
-  function test() {
-    console.log('test');
-
-  }
-
-
-
-    var def_function=function(){};
-    function btn_templtate(selecter, sublet_address, json_function,
-        succes_function) {
-      $(selecter).click(
-          function() {
-
-            console.log(selecter);
-
-            var jsoncontents = json_function();
-            console.log("snd:",jsoncontents);
-
-
-            $.ajax({
-              type : 'post',
-              dataType : 'json',
-              url : sublet_address,
-
-              data : {json:JSON.stringify(jsoncontents)} ,
-
-              success :
-                function(data) {
-                console.log("rcv:",data);
-                succes_function(data);
-
-              },
-              error : function(request, status, error) {
-                console.log('code: ' + request.status + "\n"
-                    + 'message: ' + request.responseText
-                    + "\n" + 'error: ' + error);
-              }
-            });
-
-          });
-
-    };
-    function make_form(selector,input_info) {
-
-
-
-        $.each(input_info, function( index, value ) {
-          var input_str = "";
-            $.each(value.inputs, function( index, value ) {
-              var input_unit_form = `<label for=\"${value.id}">${value.lable}</label>     <input class="form-control  input-lg"		id="${value.id}" type="text">\n`;
-              input_str += input_unit_form;
-              console.log(input_unit_form);
-            });
-            //console.log(input_str);
-
-            var str_form = `	<div class="form-group" id=${index}>
-                ${input_str}
-                <button type="button" id='${value.button.id}' class="btn btn-lg btn-primary">${value.button.lable}</button>
-              </div><br/><br/>`;
-
-            console.log(str_form);
-            $(selector).append(str_form);
-
-        });
-
-
-
-
-    }
-    function make_inputclear(input_info) {
-      $.each(input_info, function( index, value ) {
-        var input_str = "";
-          $.each(value.inputs, function( index, value ) {
-            $("#"+value.id).val("");
-          });
-
-      });
-
-
-    }
-
 		//function abc(a1,a2,a3,a4);
 		$(function() {
-			console.log('ready');
-      test();
 
+      console.log('ready');
+      console.log(navigator);
+      console.log(navigator.platform);
+      $('#result').text(navigator.platform);
 
+      var unknown = '-';
 
-      var default_info = {
-        group_0: {
-            button: {
-                id: "generate",
-                lable: "칩 피쳐 발생 및 시작"
-            },
-            inputs: [
-                {
-                    id: "puf",
-                    lable: "PUF"
-                },
-                {
-                    id: "factory_key_rtl",
-                    lable: "FACTORY KEY RTL"
-                }
-            ]
-        },
-        group_1: {
-            button: {
-                id: "get_sn",
-                lable: "SN 값 가져오기(from chip)"
-            },
-            inputs: [
-                {
-                    id: "sn",
-                    lable: "SN"
-                }
-            ]
-        },
+        // screen
+        var screenSize = '';
+        if (screen.width) {
+            width = (screen.width) ? screen.width : '';
+            height = (screen.height) ? screen.height : '';
+            screenSize += '' + width + " x " + height;
+        }
 
-      };
+        // browser
+        var nVer = navigator.appVersion;
+        var nAgt = navigator.userAgent;
+        var browser = navigator.appName;
+        var version = '' + parseFloat(navigator.appVersion);
+        var majorVersion = parseInt(navigator.appVersion, 10);
+        var nameOffset, verOffset, ix;
 
-			var input_reg_info =
-{
-
-
-    group_2: {
-        button: {
-            id: "get_factory_key_id",
-            lable: "FACTORY KEY ID 가져오기(from server)"
-        },
-        inputs: [
-            {
-                id: "factory_key_id",
-                lable: "FACTORY  KEY ID"
+        // Opera
+        if ((verOffset = nAgt.indexOf('Opera')) != -1) {
+            browser = 'Opera';
+            version = nAgt.substring(verOffset + 6);
+            if ((verOffset = nAgt.indexOf('Version')) != -1) {
+                version = nAgt.substring(verOffset + 8);
             }
-        ]
-    },
-    group_3: {
-        button: {
-            id: "get_reg_key",
-            lable: "등록 키 가져오기(from chip)"
-        },
-        inputs: [
-            {
-                id: "nonce",
-                lable: "NONCE"
-            },
-            {
-                id: "cipher",
-                lable: "CIPHER"
-            },
-            {
-                id: "mac",
-                lable: "MAC"
+        }
+        // Opera Next
+        if ((verOffset = nAgt.indexOf('OPR')) != -1) {
+            browser = 'Opera';
+            version = nAgt.substring(verOffset + 4);
+        }
+        // Edge
+        else if ((verOffset = nAgt.indexOf('Edge')) != -1) {
+            browser = 'Microsoft Edge';
+            version = nAgt.substring(verOffset + 5);
+        }
+        // MSIE
+        else if ((verOffset = nAgt.indexOf('MSIE')) != -1) {
+            browser = 'Microsoft Internet Explorer';
+            version = nAgt.substring(verOffset + 5);
+        }
+        // Chrome
+        else if ((verOffset = nAgt.indexOf('Chrome')) != -1) {
+            browser = 'Chrome';
+            version = nAgt.substring(verOffset + 7);
+        }
+        // Safari
+        else if ((verOffset = nAgt.indexOf('Safari')) != -1) {
+            browser = 'Safari';
+            version = nAgt.substring(verOffset + 7);
+            if ((verOffset = nAgt.indexOf('Version')) != -1) {
+                version = nAgt.substring(verOffset + 8);
             }
-        ]
-    },
-    group_4: {
-        button: {
-            id: "get_calc_mac",
-            lable: "등록 결과 가져오기 (from server)"
-        },
-        inputs: [
-            {
-                id: "calc_mac",
-                lable: "서버에서 계산된 맥값"
-            },
-            {
-                id: "result",
-                lable: "최종 결과"
-            },
-            {
-                id: "error",
-                lable: "오류값"
+        }
+        // Firefox
+        else if ((verOffset = nAgt.indexOf('Firefox')) != -1) {
+            browser = 'Firefox';
+            version = nAgt.substring(verOffset + 8);
+        }
+        // MSIE 11+
+        else if (nAgt.indexOf('Trident/') != -1) {
+            browser = 'Microsoft Internet Explorer';
+            version = nAgt.substring(nAgt.indexOf('rv:') + 3);
+        }
+        // Other browsers
+        else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) < (verOffset = nAgt.lastIndexOf('/'))) {
+            browser = nAgt.substring(nameOffset, verOffset);
+            version = nAgt.substring(verOffset + 1);
+            if (browser.toLowerCase() == browser.toUpperCase()) {
+                browser = navigator.appName;
             }
-        ]
-    }
-};
-var input_auth_info =
-{
+        }
+        // trim the version string
+        if ((ix = version.indexOf(';')) != -1) version = version.substring(0, ix);
+        if ((ix = version.indexOf(' ')) != -1) version = version.substring(0, ix);
+        if ((ix = version.indexOf(')')) != -1) version = version.substring(0, ix);
 
+        majorVersion = parseInt('' + version, 10);
+        if (isNaN(majorVersion)) {
+            version = '' + parseFloat(navigator.appVersion);
+            majorVersion = parseInt(navigator.appVersion, 10);
+        }
 
-group_5: {
-  button: {
-      id: "get_random_values",
-      lable: "RANDOM VALUES 가져오기(from server)"
-  },
-  inputs: [
-      {
-          id: "random",
-          lable: "RANDOM"
-      },
-      {
-          id: "random_server",
-          lable: "RANDOM SERVER"
-      }
-  ]
-},
-group_6: {
-  button: {
-      id: "get_authentication",
-      lable: "인증 정보 가져오기(from chip)"
-  },
-  inputs: [
+        // mobile version
+        var mobile = /Mobile|mini|Fennec|Android|iP(ad|od|hone)/.test(nVer);
 
-      {
-          id: "cipher_auth",
-          lable: "CIPHER"
-      },
-      {
-          id: "mac_auth",
-          lable: "MAC"
-      }
-  ]
-},
-group_7: {
-  button: {
-      id: "req_athentication",
-      lable: "등록 결과 가져오기 (from server)"
-  },
-  inputs: [
-      {
-          id: "calc_mac_auth",
-          lable: "서버에서 계산된 맥값"
-      },
-      {
-          id: "result_auth",
-          lable: "최종 결과"
-      },
-      {
-          id: "error_auth",
-          lable: "오류값"
-      }
-  ]
-}
-};
+        // cookie
+        var cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
+        if (typeof navigator.cookieEnabled == 'undefined' && !cookieEnabled) {
+            document.cookie = 'testcookie';
+            cookieEnabled = (document.cookie.indexOf('testcookie') != -1) ? true : false;
+        }
 
-//	console.log(input_info);
-  make_form('#default_form',default_info);
-  make_form('#reg_form',input_reg_info);
-  make_form('#auth_form',input_auth_info);
-
-  make_inputclear(input_reg_info);
-	make_inputclear(input_auth_info);
-	// $.each(input_info, function( index, value ) {
-	// 	console.log(index, value);
-  //
-	// });
-  //
-    $('#reg_form').hide();
-    $('#auth_form').hide();
-  $('#reg_toggle').click(
-      function() {
-          $('#reg_form').toggle();
-
-      });
-
-      $('#auth_toggle').click(
-          function() {
-              $('#auth_form').toggle();
-
-          });
-
-
-			btn_templtate('#generate', 'giant_se/simchip.do',
-			function() {return   {cmd : 'GENERATE_FEATURE',params : {}	}	},
-			function(data) {
-				console.log(data);
-				console.log(data.params.puf);
-				console.log(data.params.factory_key_rtl);
-        make_inputclear(default_info);
-				make_inputclear(input_reg_info);
-				make_inputclear(input_auth_info);
-				$('#puf').val(data.params.puf);
-				$('#factory_key_rtl').val(data.params.factory_key_rtl);
-
-
-
-			});
-
-			btn_templtate('#get_sn', 'giant_se/simchip.do',
-				function() {return   {cmd : 'GET_SN',params : {}	}	},
-				function(data) {
-					console.log(data);
-					console.log(data.params.sn);
-					$('#sn').val(data.params.sn);
-					$('#reg_form').show();
-					$(location).attr('href', '#reg_form')
-				});
-
-
-			btn_templtate('#get_factory_key_id', 'giant_se/reg.do',
-				function() {return   {cmd : 'FACTORY_KEY_ID',params : {
-					sn:$('#sn').val(),
-					company_no:'ictk0001'
-				}}},
-				function(data) {
-					console.log(data);
-					console.log(data.params.factory_key_id);
-					$('#factory_key_id').val(data.params.factory_key_id);
-				}
-
-
-			);
-
-			btn_templtate('#get_reg_key', 'giant_se/simchip.do',
-					function() {return   {cmd : 'GET_REG_KEY',params : {
-						factory_key_id:$('#factory_key_id').val(),
-					}}},
-					function(data) {
-						console.log(data);
-						$('#nonce').val(data.params.nonce);
-						$('#cipher').val(data.params.cipher);
-            $('#mac').val(data.params.mac);
-					}
-
-
-				);
-
-        btn_templtate('#get_calc_mac', 'giant_se/reg.do',
-  					function() {return   {cmd : 'REGISTER',params : {
-  						nonce:$('#nonce').val(),
-              cipher:$('#cipher').val(),
-              mac:$('#mac').val(),
-  					}}},
-  					function(data) {
-  						console.log(data);
-  						$('#calc_mac').val(data.params.calc_mac);
-  						$('#result').val(data.result);
-              $('#error').val(data.error);
-							if(data.result != "OK") return;
-							//alert("등록이 완료 되었습니다.");
-							//$('#reg_form').hide();
-							$('#auth_form').show();
-							$(location).attr('href', '#auth_form')
-
-  					}
-
-
-
-  				);
-
-          btn_templtate('#get_random_values', 'giant_se/auth.do',
-            function() {return   {cmd : 'RANDOM_VALUES',params : {
-              sn:$('#sn').val(),
-            }}},
-            function(data) {
-              console.log(data);
-
-              $('#random').val(data.params.random);
-              $('#random_server').val(data.params.random_server);
+        // system
+        var os = unknown;
+        var clientStrings = [
+            {s:'Windows 10', r:/(Windows 10.0|Windows NT 10.0)/},
+            {s:'Windows 8.1', r:/(Windows 8.1|Windows NT 6.3)/},
+            {s:'Windows 8', r:/(Windows 8|Windows NT 6.2)/},
+            {s:'Windows 7', r:/(Windows 7|Windows NT 6.1)/},
+            {s:'Windows Vista', r:/Windows NT 6.0/},
+            {s:'Windows Server 2003', r:/Windows NT 5.2/},
+            {s:'Windows XP', r:/(Windows NT 5.1|Windows XP)/},
+            {s:'Windows 2000', r:/(Windows NT 5.0|Windows 2000)/},
+            {s:'Windows ME', r:/(Win 9x 4.90|Windows ME)/},
+            {s:'Windows 98', r:/(Windows 98|Win98)/},
+            {s:'Windows 95', r:/(Windows 95|Win95|Windows_95)/},
+            {s:'Windows NT 4.0', r:/(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/},
+            {s:'Windows CE', r:/Windows CE/},
+            {s:'Windows 3.11', r:/Win16/},
+            {s:'Android', r:/Android/},
+            {s:'Open BSD', r:/OpenBSD/},
+            {s:'Sun OS', r:/SunOS/},
+            {s:'Linux', r:/(Linux|X11)/},
+            {s:'iOS', r:/(iPhone|iPad|iPod)/},
+            {s:'Mac OS X', r:/Mac OS X/},
+            {s:'Mac OS', r:/(MacPPC|MacIntel|Mac_PowerPC|Macintosh)/},
+            {s:'QNX', r:/QNX/},
+            {s:'UNIX', r:/UNIX/},
+            {s:'BeOS', r:/BeOS/},
+            {s:'OS/2', r:/OS\/2/},
+            {s:'Search Bot', r:/(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/}
+        ];
+        for (var id in clientStrings) {
+            var cs = clientStrings[id];
+            if (cs.r.test(nAgt)) {
+                os = cs.s;
+                break;
             }
+        }
 
+        var osVersion = unknown;
 
-          );
+        if (/Windows/.test(os)) {
+            osVersion = /Windows (.*)/.exec(os)[1];
+            os = 'Windows';
+        }
 
-					btn_templtate('#get_authentication', 'giant_se/simchip.do',
-						function() {return   {cmd : 'AUTHENTICATION',params : {
-							random:$('#random').val(),
-							random_server:$('#random_server').val(),
-						}}},
-						function(data) {
-							console.log(data);
-							$('#cipher_auth').val(data.params.cipher);
-							$('#mac_auth').val(data.params.mac);
-						}
+        switch (os) {
+            case 'Mac OS X':
+                osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+                break;
 
+            case 'Android':
+                osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+                break;
 
-					);
+            case 'iOS':
+                osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
+                osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+                break;
+        }
 
-					btn_templtate('#req_athentication', 'giant_se/auth.do',
-						function() {return   {cmd : 'AUTHENTICATION',params : {
-							cipher:$('#cipher_auth').val(),
-							mac:$('#mac_auth').val(),
-						}}},
-						function(data) {
-							console.log(data);
-							console.log(data);
-							$('#calc_mac_auth').val(data.params.calc_mac);
-							$('#result_auth').val(data.result);
-							$('#error_auth').val(data.error);
+        // flash (you'll need to include swfobject)
+        /* script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" */
+        var flashVersion = 'no check';
+        if (typeof swfobject != 'undefined') {
+            var fv = swfobject.getFlashPlayerVersion();
+            if (fv.major > 0) {
+                flashVersion = fv.major + '.' + fv.minor + ' r' + fv.release;
+            }
+            else  {
+                flashVersion = unknown;
+            }
+        }
+    
 
-							if(data.result != "OK") return;
-							//alert("인증이 완료 되었습니다.");
-						}
-
-
-					);
-
-
+    window.jscd = {
+        screen: screenSize,
+        browser: browser,
+        browserVersion: version,
+        browserMajorVersion: majorVersion,
+        mobile: mobile,
+        os: os,
+        osVersion: osVersion,
+        cookies: cookieEnabled,
+        flashVersion: flashVersion
+    };
+    alert(
+    'OS: ' + jscd.os +' '+ jscd.osVersion + '\n' +
+    'Browser: ' + jscd.browser +' '+ jscd.browserMajorVersion +
+      ' (' + jscd.browserVersion + ')\n' +
+    'Mobile: ' + jscd.mobile + '\n' +
+    'Flash: ' + jscd.flashVersion + '\n' +
+    'Cookies: ' + jscd.cookies + '\n' +
+    'Screen Size: ' + jscd.screen + '\n\n' +
+    'Full User Agent: ' + navigator.userAgent
+);
 
 
 
@@ -424,30 +231,7 @@ group_7: {
 
 
 	<div class="container">
-    <h1>GIANT 2 시뮬레이터 페이지</h1>
-    <div class="">
-      <div class="">
-      <button type="button" id='reg_toggle' class="btn btn-lg btn-primary">등록폼>></button>
-      </div>
-      <div class="">
-      <button type="button" id='auth_toggle' class="btn btn-lg btn-primary">인증폼>></button>
-      </div>
-
-
-    </div>
-
-		<form id ='default_form' name = 'default_form'>
-			<div class="form-group"></div>
-
-		</form>
-    <form id ='reg_form' name = 'reg_form'>
-      <div class="form-group"></div>
-
-    </form>
-    <form id ='auth_form' name = 'auth_form'>
-      <div class="form-group"></div>
-
-    </form>
+    <h1 id='result'>GIANT 2 시뮬레이터 페이지</h1>
 	</div>
 
 

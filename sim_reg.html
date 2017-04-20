@@ -37,8 +37,8 @@
       var default_info = {
         group_0: {
             button: {
-                id: "generate",
-                lable: "칩 피쳐 발생 및 시작"
+                id: "set_feature",
+                lable: "칩 피쳐 설정 및 시작"
             },
             inputs: [
                 {
@@ -209,18 +209,39 @@ group_7: {
 
           });
 
+        $('#generate').click(
+            function() {
+              make_inputclear(default_info);
+              var factory_key_rtl = '5C7CCC241E71157F08E1F33D71D1049F';
+              var puf = 'AC843144B194F90BD2750E007A88E650';
+              $('#puf').val(puf);
+              $('#factory_key_rtl').val(factory_key_rtl);
 
-			btn_templtate('#generate', 'giant_se/simchip.do',
-			function() {return   {cmd : 'GENERATE_FEATURE',params : {}	}	},
+            });
+
+			btn_templtate('#set_feature', 'giant_se/simchip.do',
+			function() {
+
+        var factory_key_rtl =   $('#factory_key_rtl').val();;
+        var puf = $('#puf').val();;
+
+
+
+
+        return   {cmd : 'SET_FEATURE',params : {
+          factory_key_rtl:factory_key_rtl,
+          puf:puf
+
+        }	}	},
 			function(data) {
 				console.log(data);
 				console.log(data.params.puf);
 				console.log(data.params.factory_key_rtl);
-        make_inputclear(default_info);
+
 				make_inputclear(input_reg_info);
 				make_inputclear(input_auth_info);
-				$('#puf').val(data.params.puf);
-				$('#factory_key_rtl').val(data.params.factory_key_rtl);
+				// $('#puf').val(data.params.puf);
+				// $('#factory_key_rtl').val(data.params.factory_key_rtl);
 
 
 
@@ -349,10 +370,15 @@ group_7: {
     <h1>GIANT 2 시뮬레이터 페이지</h1>
     <div class="">
       <div class="">
-      <button type="button" id='reg_toggle' class="btn btn-lg btn-primary">등록폼>></button>
+      <button type="button" id='reg_toggle' class="btn btn-lg btn-default">등록폼>></button>
+      <button type="button" id='auth_toggle' class="btn btn-lg btn-default">인증폼>></button>
       </div>
       <div class="">
-      <button type="button" id='auth_toggle' class="btn btn-lg btn-primary">인증폼>></button>
+
+      </div>
+
+      <div class="">
+      <button type="button" id='generate' class="btn btn-lg btn-primary">발생 과 시작</button>
       </div>
 
 
