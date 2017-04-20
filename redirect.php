@@ -24,16 +24,19 @@ $sn= $_REQUEST["sn"];
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script 		src="js/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
 
   $(function() {
     console.log('ready');
     var sn = '<?php echo $sn; ?>';
+    var jscd =  get_naviinfo();
     console.log(sn);
     var jsoncontents = {
       cmd:"GET_REDIRECT_INFO",
       params : {
         ascii_sn:sn,
+        os:jscd.os
       }
     }
     $.ajax({

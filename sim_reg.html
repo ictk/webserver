@@ -20,8 +20,7 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-    <script
-  		src="js/util.js" type="text/javascript"></script>
+    <script 		src="js/util.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
 
@@ -60,6 +59,10 @@
                 {
                     id: "sn",
                     lable: "SN"
+                },
+                {
+                    id: "ascii_sn",
+                    lable: "ASCII SN"
                 }
             ]
         },
@@ -213,7 +216,7 @@ group_7: {
             function() {
               make_inputclear(default_info);
               var factory_key_rtl = '5C7CCC241E71157F08E1F33D71D1049F';
-              var puf = 'AC843144B194F90BD2750E007A88E650';
+              var puf = '6B534B5A548A1E3EEF8F053B02AD7EF8';
               $('#puf').val(puf);
               $('#factory_key_rtl').val(factory_key_rtl);
 
@@ -253,6 +256,8 @@ group_7: {
 					console.log(data);
 					console.log(data.params.sn);
 					$('#sn').val(data.params.sn);
+          $('#ascii_sn').val(data.params.ascii_sn);
+
 					$('#reg_form').show();
 					$(location).attr('href', '#reg_form')
 				});
