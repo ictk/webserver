@@ -3,6 +3,7 @@
   <li><a href="giant_se/">giant_se</a></li>
   <li><a href="giant_se/auth.do">auth</a></li>
   <li><a href="sim_reg.html">giant_se sim reg</a></li>
+  <li><a href="rd/nnbaboojmfbganncopiejdhpgnagciek">reirecting test</a></li>
   <li><a href="http://testmain.com">testmain.com</a></li>
   <li><a href="http://neo.test.com">neo.test.com</a></li>
   <li><a href="http://neo.test1.com">neo.test1.com</a></li>
