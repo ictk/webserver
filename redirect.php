@@ -46,6 +46,9 @@ $sn= $_REQUEST["sn"];
       success :
         function(data) {
         console.log("rcv:",data);
+        $('#url_img').attr('src',data.params.url_img);
+        $('#goto_app').attr('href',data.params.url);
+        $('#description').text(data.params.description);
 
         //succes_function(data);
 
@@ -62,11 +65,11 @@ $sn= $_REQUEST["sn"];
   });
   </script>
 <div class="">
-<img src="img/잘가요미안해요.jpg" class="img-rounded" alt="Cinque Terre" width="304" height="236">
+<img src="img/잘가요미안해요.jpg" id = 'url_img' class="img-rounded" alt="Cinque Terre" width="304" height="236">
 </div>
 <div class="well">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <h2><a href="#">앱으로 이동</a></h2>
+        <p id ='description' >NO COMPANY</p>
+        <h2><a id ='goto_app' href="#">앱으로 이동</a></h2>
 </div>
 
 
