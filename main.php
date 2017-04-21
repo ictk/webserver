@@ -16,12 +16,14 @@
     <li><a href="http://neo1seok.pe.kr">neo1seok.pe.kr</a></li>
     <!-- <li><a href="giant_se/">giant_se</a></li>
     <li><a href="giant_se/auth.do">auth</a></li> -->
-    <li><a href="sim_reg.html">giant_se sim reg</a></li>
-    <li><a href="rd/cpbdnjacjdpicbegeabfbibbmpiepggd">reirecting test</a></li>
+		<li><a href="company.html">컴패니페이지</a></li>
+    <li><a href="sim_reg.html">칩 등록 및 인증</a></li>
+		<li><a href="url_input.html">URL INPUT</a></li>
+    <li><a href="rd/cpbdnjacjdpicbegeabfbibbmpiepggd">자동연결테스트</a></li>
     <!-- <li><a href="http://testmain.com">testmain.com</a></li> -->
     <li><a href="test.html">테스트페이지</a></li>
     <li><a href="sample.html">샘플페이지</a></li>
-    <li><a href="company.html">컴패니페이지</a></li>
+
     <!-- <li><a href="http://neo.test.com">neo.test.com</a></li>
     <li><a href="http://neo.test1.com">neo.test1.com</a></li>
     <li><a href="http://neo.test2.com">neo.test2.com</a></li>

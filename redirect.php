@@ -60,7 +60,7 @@ $sn= $_REQUEST["sn"];
 						naverAppCheckTimer = setTimeout(function() {
 								if (+new Date - clickedAt < 2000){
 										if (window.confirm("앱 최신 버전이 설치되어 있지 않습니다.   \n설치페이지로 이동하시겠습니까?"))
-										{ location.href = window.store; }
+										{ location.replace = window.store; }
 								}
 						}, 1500);
 						window.location.href = window.intent;
