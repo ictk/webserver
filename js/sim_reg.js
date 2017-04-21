@@ -215,6 +215,8 @@ group_7: {
 				console.log(data.params.puf);
 				console.log(data.params.factory_key_rtl);
 
+				alert("결과:"+data.result+","+data.error);
+
 				make_inputclear(input_reg_info);
 				make_inputclear(input_auth_info);
 				// $('#puf').val(data.params.puf);

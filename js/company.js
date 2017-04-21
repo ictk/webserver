@@ -196,6 +196,8 @@ function update_factory_key_id() {
         }	}	},
 				function(data) {
 					console.log(data);
+					alert("결과:"+data.result+","+data.error);
+
 					if(data.result == 'OK'){
 							update_factory_key_id();
 
@@ -225,10 +227,7 @@ function update_factory_key_id() {
         }	}	},
 				function(data) {
 					console.log(data);
-					if(data.result == 'OK'){
-
-
-					}
+				alert("결과:"+data.result+","+data.error);
 
 				});
 
@@ -252,10 +251,7 @@ function update_factory_key_id() {
 					}	}	},
 					function(data) {
 						console.log(data);
-						if(data.result == 'OK'){
-
-
-						}
+					alert("결과:"+data.result+","+data.error);
 
 					});
 
@@ -278,10 +274,7 @@ function update_factory_key_id() {
 						}	}	},
 						function(data) {
 							console.log(data);
-							if(data.result == 'OK'){
-
-
-							}
+						alert("결과:"+data.result+","+data.error);
 
 						});
 

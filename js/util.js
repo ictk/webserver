@@ -56,10 +56,20 @@
 					success :
 						function(data) {
 						console.log("rcv:",data);
+						if(data.result != 'OK'){
+							alert("실패:"+data.error);
+							return;
+						}
+
 						succes_function(data);
 
 					},
 					error : function(request, status, error) {
+						var str = 'code: ' + request.status + "\n"
+								+ 'message: ' + request.responseText
+								+ "\n" + 'error: ' + error;
+
+						alert("실패:"+str);
 						console.log('code: ' + request.status + "\n"
 								+ 'message: ' + request.responseText
 								+ "\n" + 'error: ' + error);
