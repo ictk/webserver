@@ -10,36 +10,68 @@
 					function() {
 
 						console.log(selecter);
+						ajax_templtate(sublet_address, json_function,
+								succes_function);
 
-						var jsoncontents = json_function();
-						console.log("snd:",jsoncontents);
-
-
-						$.ajax({
-							type : 'post',
-							dataType : 'json',
-							url : sublet_address,
-
-							data : {json:JSON.stringify(jsoncontents)} ,
-
-							success :
-								function(data) {
-								console.log("rcv:",data);
-								succes_function(data);
-
-							},
-							error : function(request, status, error) {
-								console.log('code: ' + request.status + "\n"
-										+ 'message: ' + request.responseText
-										+ "\n" + 'error: ' + error);
-							}
-						});
+						// var jsoncontents = json_function();
+						// console.log("snd:",jsoncontents);
+						//
+						//
+						// $.ajax({
+						// 	type : 'post',
+						// 	dataType : 'json',
+						// 	url : sublet_address,
+						//
+						// 	data : {json:JSON.stringify(jsoncontents)} ,
+						//
+						// 	success :
+						// 		function(data) {
+						// 		console.log("rcv:",data);
+						// 		succes_function(data);
+						//
+						// 	},
+						// 	error : function(request, status, error) {
+						// 		console.log('code: ' + request.status + "\n"
+						// 				+ 'message: ' + request.responseText
+						// 				+ "\n" + 'error: ' + error);
+						// 	}
+						// });
 
 					});
 
 		};
+		function ajax_templtate( sublet_address, json_function,		succes_function) {
+
+				var jsoncontents = json_function();
+				console.log("snd:",jsoncontents);
+
+
+				$.ajax({
+					type : 'post',
+					dataType : 'json',
+					url : sublet_address,
+
+					data : {json:JSON.stringify(jsoncontents)} ,
+
+					success :
+						function(data) {
+						console.log("rcv:",data);
+						succes_function(data);
+
+					},
+					error : function(request, status, error) {
+						console.log('code: ' + request.status + "\n"
+								+ 'message: ' + request.responseText
+								+ "\n" + 'error: ' + error);
+					}
+				});
+
+
+
+		};
     function make_form(selector,input_info) {
       var input_unit_form = '<label for="{0}">{1}</label>     <input class="form-control  input-lg"		id="{0}" type="text">\n';
+			var select_unit_form ='<select class="selectpicker" id="{0}"></select>';
       var str_form = '<div class="form-group" id={0}>\n{1}   \n <button type="button" id="{2}" class="btn btn-lg btn-success">{3}</button> </div><br/><br/>';
       //0:group_id 1:input_str 2:id 3:lable
 
@@ -47,10 +79,18 @@
         $.each(input_info, function( index, value ) {
           var input_str = "";
             $.each(value.inputs, function( index, value ) {
-              input_str += String.format(input_unit_form,value.id,value.lable);
+							// if(value.type == 'select'){
+							// 	input_str += String.format(select_unit_form,value.id,value.lable);
+							// }
+							// else {
+							// 	input_str += String.format(input_unit_form,value.id,value.lable);
+							// }
+
+							input_str += String.format(input_unit_form,value.id,value.lable);
+
               //var input_unit_form = `<label for="${value.id}">${value.lable}</label>     <input class="form-control  input-lg"		id="${value.id}" type="text">\n`;
               //input_str += input_unit_form;
-              console.log(input_str);
+              //console.log(input_str);
             });
             //console.log(input_str);
             var str_res = String.format(str_form,index,input_str,value.button.id,value.button.lable);
@@ -60,7 +100,7 @@
             //     <button type="button" id='${value.button.id}' class="btn btn-lg btn-primary">${value.button.lable}</button>
             //   </div><br/><br/>`;
 
-      		  console.log(str_res);
+      		  //console.log(str_res);
             $(selector).append(str_res);
 
       	});
@@ -97,6 +137,27 @@
 
     return theString;
     }
+
+
+function generateRandom(min, max) {
+		var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
+		return ranNum;
+}
+function generateHexRandom( count) {
+	var refstr = '0123456789ABCDEF';
+	var ret = '';
+	for(idx = 0 ; idx < count ;idx++){
+
+		var hi = generateRandom(0,15);
+		var lo = generateRandom(0,15);
+
+		ret += refstr[hi];
+		ret += refstr[lo];
+	}
+	return ret;
+
+}
+
 
 
 

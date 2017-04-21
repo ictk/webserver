@@ -17,52 +17,94 @@ $sn= $_REQUEST["sn"];
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script 		src="js/util.js" type="text/javascript"></script>
+  <script 		src="js/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
 
   $(function() {
     console.log('ready');
     var sn = '<?php echo $sn; ?>';
     var jscd =  get_naviinfo();
-    console.log(sn);
-    var jsoncontents = {
-      cmd:"GET_REDIRECT_INFO",
-      params : {
-        ascii_sn:sn,
+
+		ajax_templtate('giant_se/admin.do',
+		function() {
+
+			return   {cmd : 'GET_REDIRECT_INFO',params : {
+				ascii_sn:sn,
         os:jscd.os
-      }
-    }
-    $.ajax({
-      type : 'post',
-      dataType : 'json',
-      url : "giant_se/admin.do",
+			}	}
 
-      data : {json:JSON.stringify(jsoncontents)} ,
+		},
+		function(data) {
+			console.log("rcv:",data);
 
-      success :
-        function(data) {
-        console.log("rcv:",data);
-				alert(jscd.os +" " +data.params.url);
-        $('#url_img').attr('src',data.params.url_img);
-        $('#goto_app').attr('href',data.params.url);
-        $('#description').text(data.params.description);
+			$('#url_img').attr('src',data.params.url_img);
+			//$('#goto_app').attr('href',data.params.intent);
+			$('#description').text(data.params.description);
 
-        //succes_function(data);
+			window.intent = data.params.intent;
+			window.store = data.params.store;
 
-      },
-      error : function(request, status, error) {
-        console.log('code: ' + request.status + "\n"
-            + 'message: ' + request.responseText
-            + "\n" + 'error: ' + error);
-      }
-    });
+
+
+
+		});
+
+		console.log(sn);
+
+		$('#goto_app').click(function(){
+			console.log('goto_app');
+			alert(jscd.os +" " +window.intent);
+			if(jscd.os == 'iOS'){
+				var clickedAt = +new Date;
+
+						naverAppCheckTimer = setTimeout(function() {
+								if (+new Date - clickedAt < 2000){
+										if (window.confirm("앱 최신 버전이 설치되어 있지 않습니다.   \n설치페이지로 이동하시겠습니까?"))
+										{ location.href = window.store; }
+								}
+						}, 1500);
+						window.location.href = window.intent;
+			}
+			else {
+					window.location.href = window.intent;
+			}
+
+		})
+
+
+
+    // var jsoncontents = {
+    //   cmd:"GET_REDIRECT_INFO",
+    //   params : {
+    //     ascii_sn:sn,
+    //     os:jscd.os
+    //   }
+    // }
+		//
+    // $.ajax({
+    //   type : 'post',
+    //   dataType : 'json',
+    //   url : "giant_se/admin.do",
+		//
+    //   data : {json:JSON.stringify(jsoncontents)} ,
+		//
+    //   success :
+    //     function(data) {
+    //     console.log("rcv:",data);
+		// 		alert(jscd.os +" " +data.params.url);
+    //     $('#url_img').attr('src',data.params.url_img);
+    //     $('#goto_app').attr('href',data.params.url);
+    //     $('#description').text(data.params.description);
+		//
+    //     //succes_function(data);
+		//
+    //   },
+    //   error : function(request, status, error) {
+    //     console.log('code: ' + request.status + "\n"
+    //         + 'message: ' + request.responseText
+    //         + "\n" + 'error: ' + error);
+    //   }
+    // });
 
 
 
