@@ -5,14 +5,14 @@ function update_factory_key_id() {
 	ajax_templtate('giant_se/admin.do',
 	function() {return   {cmd : 'LIST_FACTORY_KEY_ID',params : {}	}	},
 	function(data) {
-		$('.select_comp').each(
+		$('.select_fct').each(
 			function (i) {
 					$(this).remove();
 			});
 
 		//console.log(data);
 			$.each(data.list_param, function( index, value ) {
-				$('#factory_key_id_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='factory_key_id_option' >{0}</a></li>",value.factory_key_id));
+				$('#factory_key_id_select').append(String.format("<li class='select_fct'><a href='#' id='{0}' class='factory_key_id_option' >{0}</a></li>",value.factory_key_id));
 			});
 
 			$('.factory_key_id_option').click(
@@ -28,6 +28,62 @@ function update_factory_key_id() {
 	});
 
 }
+
+function update_company_no() {
+
+
+	ajax_templtate('giant_se/admin.do',
+	function() {return   {cmd : 'LIST_COMAPANY_NO',params : {}	}	},
+	function(data) {
+		$('.select_comp').each(
+			function (i) {
+					$(this).remove();
+			});
+
+		//console.log(data);
+			$.each(data.list_param, function( index, value ) {
+				$('#company_no_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='company_no_option' >{1}</a></li>",value.company_no,value.name));
+			});
+
+			$('.company_no_option').click(
+					function() {
+
+            var company_no = this.id;
+            var name = $(this).text();
+
+						$('#company_no').val(company_no);
+            $('#name').val(name);
+            console.log($(this).text());
+						update_company_info(company_no);
+
+
+					});
+
+
+
+	});
+
+}
+
+
+function update_company_info(company_no) {
+  ajax_templtate('giant_se/admin.do',
+	function() {return   {cmd : 'GET_COMPANY_INFO',params : {company_no:company_no}	}	},
+	function(data) {
+
+		$('#factory_key_id').val(data.params.factory_key_id);
+		$('#name').val(data.params.name);
+		$('#description').val(data.params.description);
+		$('#url').val(data.params.url);
+		$('#url_img').val(data.params.url_img);
+
+
+
+
+
+	});
+
+}
 		//function abc(a1,a2,a3,a4);
 		$(function() {
 			console.log('ready');
@@ -36,6 +92,7 @@ function update_factory_key_id() {
 
 
 			//
+			update_company_no();
 			update_factory_key_id();
 			// update_factory_key_id();
 			// update_factory_key_id();
@@ -98,47 +155,12 @@ function update_factory_key_id() {
 
       };
 
-			var input_url_info ={
-
-    group_2: {
-        button: {
-            id: "input_url_android",
-            lable: "안드로이드 INTENT URL 정보 입력"
-        },
-        inputs: [
-            {
-                id: "intent",
-                lable: "INTENT URL"
-            },
-        ]
-    },
-
-		group_3: {
-				button: {
-						id: "input_url_ios",
-						lable: "IOS INTENT URL 정보 입력"
-				},
-				inputs: [
-						{
-								id: "intent_ios",
-								lable: "INTENT URL"
-						},
-						{
-								id: "store_ios",
-								lable: "STORE URL"
-						},
-				]
-		},
-
-
-};
 
 
 
 //	console.log(input_info);
 	make_form('#factorykey_form',factorykey_info);
   make_form('#default_form',default_info);
-  make_form('#url_form',input_url_info);
 
     //$('#url_form').hide();
 		$('#generate').click(
@@ -197,17 +219,14 @@ function update_factory_key_id() {
 				function(data) {
 					console.log(data);
 					alert("결과:"+data.result+","+data.error);
+					update_factory_key_id();
 
-					if(data.result == 'OK'){
-							update_factory_key_id();
-
-					}
 
 				});
 
 			btn_templtate('#input_company_info', 'giant_se/admin.do',
 			function() {
-				var name = 'ictk';
+				var name =  $('#name').val();;
         var company_no =   $('#company_no').val();;
         var factory_key_id = $('#factory_key_id').val();;
 				var description = $('#description').val();;
@@ -227,55 +246,11 @@ function update_factory_key_id() {
         }	}	},
 				function(data) {
 					console.log(data);
+
 				alert("결과:"+data.result+","+data.error);
+				update_company_no();
 
 				});
 
-
-				btn_templtate('#input_url_android', 'giant_se/admin.do',
-				function() {
-					var company_no =   $('#company_no').val();;
-					var type =   'android';
-					var store =    '';
-					var intent =   $('#intent').val();;
-
-
-
-					return   {cmd : 'UPDATE_INTENT_URL',params : {
-						company_no:company_no,
-						type:type,
-						store:store,
-						intent:intent,
-
-
-					}	}	},
-					function(data) {
-						console.log(data);
-					alert("결과:"+data.result+","+data.error);
-
-					});
-
-					btn_templtate('#input_url_ios', 'giant_se/admin.do',
-					function() {
-						var company_no =   $('#company_no').val();;
-						var type =   'ios';
-						var store =    $('#store_ios').val();;;
-						var intent =   $('#intent_ios').val();;
-
-
-
-						return   {cmd : 'UPDATE_INTENT_URL',params : {
-							company_no:company_no,
-							type:type,
-							store:store,
-							intent:intent,
-
-
-						}	}	},
-						function(data) {
-							console.log(data);
-						alert("결과:"+data.result+","+data.error);
-
-						});
 
 		});
