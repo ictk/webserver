@@ -49,6 +49,7 @@ $sn= $_REQUEST["sn"];
       success :
         function(data) {
         console.log("rcv:",data);
+				alert(jscd.os +" " +data.params.url);
         $('#url_img').attr('src',data.params.url_img);
         $('#goto_app').attr('href',data.params.url);
         $('#description').text(data.params.description);
