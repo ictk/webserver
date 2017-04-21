@@ -63,7 +63,7 @@ $sn= $_REQUEST["sn"];
 										{ location.replace = window.store; }
 								}
 						}, 1500);
-						window.location.href = window.intent;
+						//window.location.href = window.intent;
 			}
 			else {
 					window.location.href = window.intent;
