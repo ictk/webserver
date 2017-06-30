@@ -186,6 +186,7 @@ $scope.deleteMasterKey = function(id) {
 	console.log('deleteMasterKey');
 
 };
+
 $scope.insertMasterKey = function(id) {
 	$scope.warning ='';
 	console.log('insertMasterKey');
@@ -210,7 +211,29 @@ $scope.insertMasterKey = function(id) {
 
 
 };
+$scope.findMasterKey = function(id) {
+	$scope.warning ='';
+	$scope.msg ='';
+	console.log('insertMasterKey');
 
+	$http.get("/giant_auth/admin?cmd=FIND_MASTERKEY&key_value="+$scope.master_key)
+	.then(function (response) {
+		console.log('FIND_MASTERKEY');
+		console.log(response.data);
+		if(response.data.params.Result == 'OK'){
+			$scope.msg = 'version:'+response.data.params.version+' msk_uid:'+response.data.params.msk_uid;
+			return ;
+		}
+		$scope.warning = response.data.params.ERR;
+
+	},function errorCallback(response) {
+		$scope.warning = response.status;
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+	});
+
+
+};
 
 $scope.generateMasterKey = function(id) {
 	console.log('generateMasterKey');
