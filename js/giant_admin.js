@@ -32,6 +32,7 @@ $scope.master_key = '';
 $scope.iswarning = false;
 $scope.warning = '';
 $scope.msg = '';
+$scope.map_link = {CHIP:"/giant_admin/chip.html",MASTERKEY:"/giant_admin/masterkey.html",MAIN:"/main.php"};
 
 update_masterkey($scope, $http);
 
@@ -171,6 +172,13 @@ $scope.modifyChip = function(id) {
 
 };
 
+$scope.goulr = function(url) {
+	console.log(url);
+
+	//window.location.path(url);
+	window.location.href = url;
+
+}
 $scope.test_select = function(id) {
 	console.log('test_select');
 	//console.log(Object.getOwnPropertyNames($scope.selectedName));

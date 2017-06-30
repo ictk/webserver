@@ -12,6 +12,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
 </head>
 <body>
 <script 		src="../js/util.js" type="text/javascript"></script>
@@ -87,7 +88,8 @@ table tr:nth-child(even) {
   </form>
 
 	<br>
-	<button class="w3-btn w3-green w3-ripple" ng-click="test_select()" >&#10004; TEST</button>
+
+
 
 
 
@@ -99,6 +101,8 @@ table tr:nth-child(even) {
 	  <button class='btn' ng-click="addAlert()">Add Alert</button>
 	</div> -->
 
-
+	<div class="">
+	<button class="w3-btn w3-blue w3-ripple"  ng-repeat="(name,link) in map_link" ng-click="goulr(link)" > {{name}}</button>
+	</div>
 </body>
 </html>

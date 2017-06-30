@@ -12,10 +12,11 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link href="style.css" rel="stylesheet" />
 </head>
-<body>
-<script 		src="js/util.js" type="text/javascript"></script>
-<script 		src="js/giant_admin.js" type="text/javascript"></script>
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='chipInit()'>
+<script 		src="../js/util.js" type="text/javascript"></script>
+<script 		src="../js/giant_admin.js" type="text/javascript"></script>
 <!-- <div ng-app="myApp" ng-controller="customersCtrl"> -->
 <style>
 table, th , td  {
@@ -31,47 +32,28 @@ table tr:nth-child(even) {
 }
 </style>
 
-<body ng-app="myApp" ng-controller="userCtrl">
+
 	<script type="text/javascript">
 
-  // var app = angular.module('myApp', []);
-  //
-  // app.controller('customersCtrl', function($scope, $http) {
-  //     $http.get("customers.php")
-  //     .then(function (response) {$scope.names = response.data.records;});
-  // });
-
-		$(function() {
-      console.log('ready 2');
-      			$('#factory_key_id_select').each(
-      				function () {
-      						//console.log(this);
-      				});
-
-              $('.select_comp').each(
-        				function (i) {
-        						console.log(this);
-        				});
-      				//console.log($('.container'));
-      				console.log($('#factory_key_id_select'));
-              console.log($('.select_comp'));
-      console.log('ready 2 end');
-
-      $('.factory_key_id_option').click(
-          function() {
-              console.log(this.id);
-
-          });
+  </script>
 
 
+  <nav class="{{active}}" ng-click="$event.preventDefault()">
+
+			<!-- When a link in the menu is clicked, we set the active variable -->
+
+			<a href="#" class="home" ng-click="active='home'">Home</a>
+
+			<a href="#" class="about" ng-click="active='about'">About</a>
+			<a href="#" class="contact" ng-click="active='contact'">Contact</a>
+		</nav>
+
+		<!-- ng-show will show an element if the value in the quotes is truthful,
+			 while ng-hide does the opposite. Because the active variable is not set
+			 initially, this will cause the first paragraph to be visible. -->
 
 
-
-		});
-
-
-
-	</script>
+		<p ng-show="active">You chose <b>{{active}}</b></p>
 
 
   <div class="w3-container">
@@ -82,70 +64,49 @@ table tr:nth-child(even) {
     <tr>
       <!-- <th>Edit</th> -->
       <th>SN</th>
-      <th>Master Key UID</th>
+      <th>Master Key version</th>
+			<th>Key value</th>
     </tr>
     <tr ng-repeat="(key,chip) in chips">
       <td>
-        <button class="w3-btn w3-ripple" ng-click="editUser(key)">&#9998; {{ chip.sn }}</button>
+        <button class="w3-btn w3-ripple" ng-click="showContainerChip(key)">&#9998; {{ chip.sn }}</button>
       </td>
       <!-- <td>{{ chip.sn }}</td> -->
       <td>{{ chip.version }}</td>
+			<td>{{ chip.key_value }}</td>
     </tr>
   </table>
   <br>
-  <button class="w3-btn w3-green w3-ripple" ng-click="editUser('new')">&#9998; Insert New CHIP</button>
+  <button class="w3-btn w3-green w3-ripple" ng-click="showContainerChip('new')">&#9998; Insert New CHIP</button>
 
   <form ng-hide="hideform">
-    <h3 ng-show="edit">Create New User:</h3>
-    <h3 ng-hide="edit">Edit User:</h3>
-      <label>SN:</label>
+    <h3 ng-show="edit">Insert New chip:</h3>
+    <h3 ng-hide="edit">Update Master Key:</h3>
+      <label>SN ({{sn.length}}/18):</label>
       <input class="w3-input w3-border" type="text" ng-model="sn" ng-disabled="!edit" placeholder="SN">
     <br>
       <label>chp_uid:</label>
-      <input class="w3-input w3-border" type="text" ng-model="chp_uid" ng-disabled="!edit" placeholder="chp_uid">
-    <br>
-        <label>msk_uid:</label>
-        <input class="w3-input w3-border" type="text" ng-model="msk_uid" placeholder="msk_uid">
+      <input class="w3-input w3-border" type="text" ng-model="chp_uid" ng-disabled="true" placeholder="chp_uid">
 
     <br>
-    <button class="w3-btn w3-green w3-ripple" ng-disabled="error || incomplete">&#10004; Save Changes</button>
+			<label>msk_uid</label>
+			<select class="w3-input w3-border" ng-model="selectedName"  ng-disabled="edit" ng-options="value for value in list_msk_uid">
+				<!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+			</select>
+			<br>
+			<div class="alert alert-danger" ng-hide="warning == ''">
+			 <strong>Warning!</strong> {{warning}}
+		 </div>
+
+		<br>
+    <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+		<button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyChip()" >&#10004; CONFIRM</button>
+
+
   </form>
 
 
   <br>
-  <h3>Master Keys</h3>
-  <table class="w3-table w3-bordered w3-striped">
-    <tr>
-      <th>Edit</th>
-      <th>SN</th>
-      <th>Master Key UID</th>
-    </tr>
-    <tr ng-repeat="(key,master_key) in master_keys">
-      <td>
-        <button class="w3-btn w3-ripple" ng-click="showEditContainer(key)">&#9998; Edit</button>
-      </td>
-      <td>{{ master_key.version }}</td>
-      <td>{{ master_key.key_value }}</td>
-    </tr>
-  </table>
-
-  <button class="w3-btn w3-green w3-ripple" ng-click="showEditContainer('new')">&#9998; Insert New MasterKey</button>
-  <br>
-  <form ng-hide="hideform">
-    <h3 ng-show="edit">Create New User:</h3>
-    <h3 ng-hide="edit">Edit User:</h3>
-      <label>SN:</label>
-      <input class="w3-input w3-border" type="text" ng-model="sn" ng-disabled="!edit" placeholder="SN">
-    <br>
-      <label>chp_uid:</label>
-      <input class="w3-input w3-border" type="text" ng-model="chp_uid" ng-disabled="!edit" placeholder="chp_uid">
-    <br>
-        <label>msk_uid:</label>
-        <input class="w3-input w3-border" type="text" ng-model="msk_uid" placeholder="msk_uid">
-
-    <br>
-    <button class="w3-btn w3-green w3-ripple" ng-disabled="error || incomplete">&#10004; Save Changes</button>
-  </form>
 
 
   </div>
