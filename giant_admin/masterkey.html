@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>COMPANY PAGE</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body>
+<script 		src="../js/util.js" type="text/javascript"></script>
+<script 		src="../js/giant_admin.js" type="text/javascript"></script>
+<!-- <div ng-app="myApp" ng-controller="customersCtrl"> -->
+<style>
+table, th , td  {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>
+
+<body ng-app="myApp" ng-controller="userCtrl">
+	<script type="text/javascript">
+
+
+
+
+	</script>
+
+
+  <div class="w3-container">
+
+  <h3>Master Keys</h3>
+
+
+  <button class="w3-btn w3-green w3-ripple" ng-click="showContainerMasterKey()">&#9998; Toggle List master key</button>
+	<br>
+	<table class="w3-table w3-bordered w3-striped" ng-hide="hideform">
+		<tr>
+			<th>master key uid</th>
+			<th>version</th>
+			<th>KEY VALUE</th>
+			<!-- <th>삭제</th> -->
+		</tr>
+		<tr ng-repeat="(key,master_key) in master_keys">
+			<td>{{ key }}</td>
+			<td>{{ master_key.version }}</td>
+			<td>{{ master_key.key_value }}</td>
+			<!-- <td>
+				<button class="w3-btn w3-ripple" ng-click="delete(key)">&#9998; 삭제</button>
+			</td> -->
+
+		</tr>
+	</table>
+
+  <br>
+  <form >
+    <h3>Handle Master Key</h3>
+		<button class="w3-btn w3-green w3-ripple" ng-click="generateMasterKey()" >&#10004; Generate master key</button>
+		<br>
+      <label>Master Key  {{master_key.length}}/64</label>
+      <input class="w3-input w3-border" type="text" ng-model="master_key" ng-disabled="!edit" placeholder="master_key">
+    <br>
+
+		<div class="alert alert-success" ng-hide="msg == ''">
+		 <strong>Warning!</strong> {{msg}}
+		</div>
+
+		<div class="alert alert-danger" ng-hide="warning == ''">
+		 <strong>Warning!</strong> {{warning}}
+	 </div>
+	 <button class="w3-btn w3-green w3-ripple" ng-click="insertMasterKey()" ng-disabled="incomplete">&#10004; INSERT MASTERKEY</button>
+	 <button class="w3-btn w3-green w3-ripple" ng-click="findMasterKey()" ng-disabled="incomplete">&#10004; FIND MASTERKEY</button>
+
+  </form>
+
+	<br>
+	<button class="w3-btn w3-green w3-ripple" ng-click="test_select()" >&#10004; TEST</button>
+
+
+
+  </div>
+	<!-- <div ng-controller="AlertDemoCtrl">
+	  <div ng-repeat="alert in alerts" ng-show="alert.show">
+	    <alert type="alert.type" close="closeAlert($index)">TEST		</alert>
+	  </div>
+	  <button class='btn' ng-click="addAlert()">Add Alert</button>
+	</div> -->
+
+
+</body>
+</html>

@@ -23,7 +23,8 @@
     <!-- <li><a href="http://testmain.com">testmain.com</a></li> -->
     <li><a href="test.html">테스트페이지</a></li>
     <li><a href="sample.html">샘플페이지</a></li>
-		<li><a href="giant_admin.html">GIANT 1 관리 페이지</a></li>
+		<li><a href="/giant_admin/chip.html">GIANT 1 칩관리</a></li>
+		<li><a href="/giant_admin/masterkey.html">GIANT 1 키관리</a></li>
 		<li><a href="angular_test.html">angular_test</a></li>
 
     <!-- <li><a href="http://neo.test.com">neo.test.com</a></li>

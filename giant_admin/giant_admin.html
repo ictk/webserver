@@ -122,14 +122,30 @@ table tr:nth-child(even) {
     </tr>
     <tr ng-repeat="(key,master_key) in master_keys">
       <td>
-        <button class="w3-btn w3-ripple" ng-click="editUser(key)">&#9998; Edit</button>
+        <button class="w3-btn w3-ripple" ng-click="showEditContainer(key)">&#9998; Edit</button>
       </td>
       <td>{{ master_key.version }}</td>
       <td>{{ master_key.key_value }}</td>
     </tr>
   </table>
 
+  <button class="w3-btn w3-green w3-ripple" ng-click="showEditContainer('new')">&#9998; Insert New MasterKey</button>
+  <br>
+  <form ng-hide="hideform">
+    <h3 ng-show="edit">Create New User:</h3>
+    <h3 ng-hide="edit">Edit User:</h3>
+      <label>SN:</label>
+      <input class="w3-input w3-border" type="text" ng-model="sn" ng-disabled="!edit" placeholder="SN">
+    <br>
+      <label>chp_uid:</label>
+      <input class="w3-input w3-border" type="text" ng-model="chp_uid" ng-disabled="!edit" placeholder="chp_uid">
+    <br>
+        <label>msk_uid:</label>
+        <input class="w3-input w3-border" type="text" ng-model="msk_uid" placeholder="msk_uid">
 
+    <br>
+    <button class="w3-btn w3-green w3-ripple" ng-disabled="error || incomplete">&#10004; Save Changes</button>
+  </form>
 
 
   </div>
