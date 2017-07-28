@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+  <title>샘플폼</title>
+
+  <!-- 부트스트랩 -->
+
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+</head>
+
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <script src="../js/sha256.js"></script>
+  <script src="../js/util.js"></script>
+  <script src="js/comm.js"></script>
+  <script src="js/factory_key.js"></script>
+
+  <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window', '$http', mainController]);
+  </script>
+
+  <div class="col-md-6" id='div_list' ng-show='showFactoryKeyDiv'>
+    <h2>Factory Key 관리</h2>
+
+    <table class="w3-table w3-bordered w3-striped">
+      <tr>
+        <!-- <th>Edit</th> -->
+        <th>팩토리키 ID</th>
+        <th>팩토리키</th>
+      </tr>
+      <tr ng-repeat="factory in list_factory_key">
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="editFactoryKey(factory.ftk_uid)">&#9998; {{ factory.factory_key_id }}</button>
+        </td>
+        <td>{{ factory.factory_key }}</td>
+      </tr>
+    </table>
+
+
+    <button class="w3-btn w3-green w3-ripple" ng-click="editFactoryKey('')">&#9998; New factory_key</button>
+
+
+    <form ng-show="showFactoryKeyForm" class="w3-container" id="div_input" name="div_input">
+
+      <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; 팩토리키 ID 발생</button>
+      <br>
+      <label>팩토리키 ID:</label>
+      <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key_id" placeholder="팩토리키 ID">
+      <br>
+
+      <label>팩토리키 RTL (size:{{factory_key.factory_key_rtl.length/2}}/16):</label>
+      <input class="w3-input w3-border" type="text" ng-model="factory_key.factory_key_rtl" placeholder="팩토리키 RTL">
+
+      <button class="w3-btn w3-green w3-ripple" ng-click="modify()">&#10004; UPDATE</button>
+      <button class="w3-btn w3-green w3-ripple" ng-disabled="isNewFactoryKey" ng-click="check()">&#10004; CHECK</button>
+
+
+
+    </form>
+
+    <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
+
+    <div class="alert alert-danger" ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+
+    <div class="">
+      <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>
+  	</div>
+
+
+
+
+
+
+
+</body>
+
+</html>

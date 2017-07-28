@@ -355,3 +355,14 @@ jscd = {
 return jscd;
 
 }
+
+function make_map_from_list(list_contents,uid){
+var ret_map_list = {};
+	$.each(list_contents, function(key,value) {
+		//if(Number(version) > Number(value.version)) return;
+		//console.log(value.name,value.ftk_uid);
+		console.log(value[uid]);
+		ret_map_list[value[uid]]=value
+	});
+	return ret_map_list;
+}

@@ -32,7 +32,7 @@ $scope.master_key = '';
 $scope.iswarning = false;
 $scope.warning = '';
 $scope.msg = '';
-$scope.map_link = {CHIP:"/giant_admin/chip.html",MASTERKEY:"/giant_admin/masterkey.html",MAIN:"/main.php"};
+$scope.map_link = {CHIP:"/giant/chip.html",MASTERKEY:"/giant/masterkey.html",MAIN:"/main.php"};
 
 update_masterkey($scope, $http);
 
