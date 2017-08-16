@@ -1,62 +1,152 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Bootstrap Example</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>업체관리</title>
+
+    <!-- 부트스트랩 -->
+
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+
 </head>
-<body>
 
-	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-    <script 		src="js/util.js" type="text/javascript"></script>
-		<script 		src="js/sim_reg.js" type="text/javascript"></script>
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
 
 
 
 
-	<div class="container">
-    <h1>GIANT 2 시뮬레이터 페이지</h1>
-    <div class="">
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="../js/sha256.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="js/comm.js"></script>
+		<script src="js/company.js"></script>
+
+    <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
+
+
+    </script>
+
+
+
+
+
+
+
+
+		<div class="col-md-6" id='div_list' >
+      <h2>업체 정보 입력</h2>
+      <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" > 리스트보이기>></button>
+
+
+
+      <form  class="w3-container" id="div_input" name="div_input">
+        <h3 >칩 값 설정 :</h3>
+				<button class="w3-btn w3-yellow w3-ripple"  ng-click="modifyCompany()" > 칩 피쳐 발생</button>
+
+
+
+        <br>
+          <label>PUF:</label>
+          <input class="w3-input w3-border" type="text" ng-model="org_name"  placeholder="회사이름">
+        <br>
+
+          <label>FACTORY KEY RTL:</label>
+          <input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
+        <br>
+
+					<label>SN:</label>
+					<input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
+				<br>
+				<label>ASCII SN:</label>
+					<input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
+				<br>
+
+
+
+          <label>회사 선택:</label>
+          <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_name for value in list_company">
+            <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+          </select>
+
+
+
+        <br>
+
+
+
+        <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+        <button class="w3-btn w3-green w3-ripple"  ng-click="modifyCompany()" >&#10004; 시뮬 칩 기본값 설정</button>
+
+
+
+      </form>
+      <form ng-show="showUrlForm" class="w3-container" id="div_input" name="div_input">
+        <h2>{{intent_title}}</h2>
+        <table class="w3-table">
+          <!-- <tr>
+            <th>TYPE</th>
+            <th>INDENT</th>
+          </tr> -->
+
+        <tr ng-repeat="url in list_urls">
+          <td>
+            {{url.type}}
+          </td>
+          <td>
+            <label>INTENT</label>
+            <input class="w3-input w3-border" type="text" ng-model="url.intent"  placeholder="intent">
+            <label>STORE</label>
+            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
+
+          </td>
+          <!-- <td>
+            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
+          </td> -->
+        </tr>
+      </table>
+
+        <br>
+        <button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyIntent()" >&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editCompany(ogi_uid)" >&#x2712; 업체 정보 편집</button>
+
+
+      </form>
+      <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
+
+      <div class="alert alert-danger" ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+
       <div class="">
-      <button type="button" id='reg_toggle' class="btn btn-lg btn-default">등록폼>></button>
-      <button type="button" id='auth_toggle' class="btn btn-lg btn-default">인증폼>></button>
-      </div>
-      <div class="">
-
-      </div>
-
-      <div class="">
-      <button type="button" id='generate' class="btn btn-lg btn-primary">샘플 발생 과 클리어</button>
-      </div>
+        <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>
+    	</div>
 
 
     </div>
+    <br>
+    <br>
 
-		<form id ='default_form' name = 'default_form'>
-			<div class="form-group"></div>
 
-		</form>
-    <form id ='reg_form' name = 'reg_form'>
-      <div class="form-group"></div>
-
-    </form>
-    <form id ='auth_form' name = 'auth_form'>
-      <div class="form-group"></div>
-
-    </form>
-	</div>
 
 
 

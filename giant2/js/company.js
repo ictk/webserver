@@ -31,7 +31,7 @@ init_event($scope);
 
 $scope.warning = '';
 $scope.indent_types = ['android','ios'];
-$scope.list_comp_names = ['cmp_uid','company_no','ftk_uid','company_name','description','url','url_img']
+$scope.list_comp_names = ['ogi_uid','org_code','ftk_uid','org_name','description','url','url_img']
 
 
 $scope.bodyInit= function() {
@@ -40,7 +40,7 @@ $scope.bodyInit= function() {
 	var response = get_list_from_server($http,{cmd : 'LIST_COMAPANY_NO',params : {}	} ,function(response) {
 
 		$scope.list_company =response.data.list_param;
-		$scope.map_list_company = make_map_from_list($scope.list_company,'cmp_uid');
+		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
 
 	},fail_process);
 
@@ -68,7 +68,7 @@ $scope.bodyInit= function() {
 // 		console.log('test',response.data.list_param);
 // 		console.log('test',$scope.list_company);
 //
-// 		$scope.map_list_company = make_map_from_list($scope.list_company,'cmp_uid');
+// 		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
 // 		console.log('test 1',$scope.map_list_company);
 //
 //   },function errorCallback(response) {
@@ -86,7 +86,7 @@ $scope.bodyInit= function() {
 // 	console.log('test',response.data.list_param);
 // 	console.log('test',$scope.list_company);
 //
-// 	$scope.map_list_company = make_map_from_list($scope.list_company,'cmp_uid');
+// 	$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
 // 	console.log('test 1',$scope.map_list_company);
 //
 // },function errorCallback(response) {
@@ -100,7 +100,7 @@ $scope.bodyInit= function() {
 // 	console.log('get_contents');
 // 	console.log(response.data);
 // 	$.each(response.data.list_param, function( index, value ) {
-// 		//$('#company_no_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='company_no_option' >{1}</a></li>",value.company_no,value.name));
+// 		//$('#org_code_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='org_code_option' >{1}</a></li>",value.org_code,value.name));
 // 		console.log(value);
 // 	});
 // 	$scope.list_factory_key =response.data.list_contents;
@@ -140,9 +140,9 @@ console.log(company_info);
 if(company_info == null){
 	console.log('not define FUCK');
 	company_info = {
-		company_no:'',
+		org_code:'',
 		ftk_uid:'',
-		company_name:'',
+		org_name:'',
 		factory_key_id:'',
 		factory_key:'',
 		description:'',
@@ -162,7 +162,7 @@ if(company_info == null){
 }else {
 	$scope.check_save = false;
 	$scope.form_type = 'update';
-	get_list_from_server($http,{cmd : 'GET_COMPANY_INFO',params : {cmp_uid:uid}	} ,function(response) {
+	get_list_from_server($http,{cmd : 'GET_COMPANY_INFO',params : {ogi_uid:uid}	} ,function(response) {
 		console.log(response.data);
 		update_scope_company(response.data.params);
 
@@ -190,15 +190,15 @@ if(company_info == null){
 
 $scope.editIndent= function(uid) {
 	init_event($scope);
-	$scope.cmp_uid = uid;
+	$scope.ogi_uid = uid;
 console.log('editIndent');
 showHideForm($scope,showCompanyList=false,showCompanyForm=false,showUrlForm=true );
 $scope.showUrlForm = true;
 var company_info = $scope.map_list_company[uid];
 console.log(company_info);
-$scope.intent_title = company_info.company_name+"("+company_info.company_no+")";
+$scope.intent_title = company_info.org_name+"("+company_info.org_code+")";
 
-get_list_from_server($http,{cmd : 'LIST_INTENT_URL',params : {cmp_uid:uid}	} ,function(response) {
+get_list_from_server($http,{cmd : 'LIST_INTENT_URL',params : {ogi_uid:uid}	} ,function(response) {
 	console.log(response.data);
 	$scope.list_urls=response.data.list_param;
 	$scope.hash_intent_input = get_hash_intent();
@@ -231,10 +231,10 @@ $scope.modifyCompany= function() {
 
 
 params ={
-	cmp_uid:$scope.cmp_uid,
-company_no:$scope.company_no,
+	ogi_uid:$scope.ogi_uid,
+org_code:$scope.org_code,
 ftk_uid:ftk_uid,
-company_name:$scope.company_name,
+org_name:$scope.org_name,
 description:$scope.description,
 url:$scope.url,
 url_img:$scope.url_img,
@@ -270,9 +270,9 @@ $scope.modifyIntent= function() {
 		return;
 	}
 
-cmp_uid = $scope.cmp_uid
+ogi_uid = $scope.ogi_uid
 
-	get_list_from_server($http,{cmd : 'UPDATE_INTENT_URL',params :{cmp_uid:cmp_uid},list_param: $scope.list_urls}	 ,function(response) {
+	get_list_from_server($http,{cmd : 'UPDATE_INTENT_URL',params :{ogi_uid:ogi_uid},list_param: $scope.list_urls}	 ,function(response) {
 		console.log(response.data);
 		$scope.list_urls=response.data.list_param;
 		if(response.data.result == "OK"){
@@ -323,6 +323,7 @@ function get_Hash_name(list_string){
 	$.each(list_string, function(key,value) {
 		tmp_str += $scope[value];
 	});
+	console.log('tmp_str hash before:',tmp_str);
 	return Sha256.hash(tmp_str);
 }
 
@@ -342,10 +343,10 @@ function update_scope_company(company_info){
 		'update_scope_company',company_info
 	);
 
-	$scope.cmp_uid = company_info.cmp_uid;
-	$scope.company_no = company_info.company_no;
+	$scope.ogi_uid = company_info.ogi_uid;
+	$scope.org_code = company_info.org_code;
 	$scope.ftk_uid = company_info.ftk_uid;
-	$scope.company_name = company_info.company_name;
+	$scope.org_name = company_info.org_name;
 
 	console.log($scope.map_list_factory_key);
 	console.log(company_info.ftk_uid);
@@ -363,12 +364,13 @@ function update_scope_company(company_info){
 		'test 2',
 		$scope.showCompanyForm
 	);
+	console.log('$scope.list_comp_names',$scope.list_comp_names);
 
 	$scope.company_hashname = get_Hash_name($scope.list_comp_names);
 	console.log($scope.company_hashname);
 
 
-	//$scope.total_input = $scope.cmp_uid
+	//$scope.total_input = $scope.ogi_uid
 
 
 

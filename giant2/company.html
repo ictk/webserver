@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>샘플폼</title>
+    <title>업체관리</title>
 
     <!-- 부트스트랩 -->
 
@@ -54,9 +54,10 @@
 
 
 
+
 		<div class="col-md-6" id='div_list' >
       <h2>업체 정보 입력</h2>
-      <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" >&#10004; 리스트보이기>></button>
+      <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" > 리스트보이기>></button>
 
 
       <table class="w3-table w3-bordered w3-striped" ng-show='showCompanyList'>
@@ -67,15 +68,18 @@
         </tr>
         <tr ng-repeat="company in list_company">
           <td>
-            <button class="w3-btn w3-ripple" ng-click="editCompany(company.cmp_uid)">&#9998; {{ company.company_name }}</button>
+            <button class="w3-btn w3-ripple" ng-click="editCompany(company.ogi_uid)">&#9998; {{ company.org_name }}</button>
           </td>
           <td>
-          <button class="w3-btn w3-ripple" ng-click="editIndent(company.cmp_uid)">&#9998; Indent 편집</button>
+          <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998; Indent 편집</button>
           </td>
         </tr>
       </table>
 
-      <button class="w3-btn w3-green w3-ripple" ng-click="editCompany('')">&#9998; Insert New CHIP</button>
+
+
+
+      <button class="w3-btn w3-green w3-ripple" ng-click="editCompany('')">&#9998; 업체등록</button>
 
       <form ng-show="showCompanyForm" class="w3-container" id="div_input" name="div_input">
         <h3 ng-show="form_type=='new'">Insert New chip:</h3>
@@ -87,11 +91,11 @@
 
         <br>
           <label>회사이름:</label>
-          <input class="w3-input w3-border" type="text" ng-model="company_name" ng-disabled="!check_save" placeholder="회사이름">
+          <input class="w3-input w3-border" type="text" ng-model="org_name" ng-disabled="!check_save" placeholder="회사이름">
         <br>
 
           <label>회사 번호:</label>
-          <input class="w3-input w3-border" type="text" ng-model="company_no" ng-disabled="!check_save" placeholder="회사 번호">
+          <input class="w3-input w3-border" type="text" ng-model="org_code" ng-disabled="!check_save" placeholder="회사 번호">
         <br>
 
           <label>팩토리키 ID:</label>
@@ -118,6 +122,7 @@
 
         <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
         <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="modifyCompany()" >&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(ogi_uid)" >&#x2712; INDENT 편집</button>
 
 
       </form>
@@ -148,6 +153,7 @@
 
         <br>
         <button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyIntent()" >&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editCompany(ogi_uid)" >&#x2712; 업체 정보 편집</button>
 
 
       </form>
