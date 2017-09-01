@@ -15,8 +15,8 @@ function showHideForm($scope,showCompanyList=false,showCompanyForm=false,showUrl
 	console.log(
 		$scope.showCompanyList,
 		$scope.showCompanyForm,
-		$scope.showUrlForm
 	);
+	$scope.showUrlForm
 
 
 }
@@ -28,27 +28,44 @@ function mainController($scope, $window,$http) {
 showHideForm($scope,showCompanyList = true);
 init_body($scope);
 init_event($scope);
-
+$scope.page_navigation ='page_navigation.html';
 $scope.warning = '';
 $scope.indent_types = ['android','ios'];
 $scope.list_comp_names = ['ogi_uid','org_code','ftk_uid','org_name','description','url','url_img']
+$scope.cookie_name = 'compnay_page';
 
-
+console.log(document.cookie);
+console.log(window.page);
 $scope.bodyInit= function() {
+	$scope.page = getCookie($scope.cookie_name)
+	setCookie('test1','1');
+	setCookie('test2','2');
+	console.log(document.cookie);
+	console.log('compnay_page',$scope.page);
+	console.log('test2',getCookie('test2'));
 
 
-	var response = get_list_from_server($http,{cmd : 'LIST_COMAPANY_NO',params : {}	} ,function(response) {
 
-		$scope.list_company =response.data.list_param;
+	var response = get_list_from_server($http,{cmd : 'LIST_COMAPANY_NO',params : {page:$scope.page}	} ,function(response) {
+
+
+
+		$scope.list_company =response.data.list_params;
 		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
+		$scope.max_page = response.data.params.max_page
+		$scope.page = response.data.params.page
+		$scope.page_info = $scope.max_page+"페이지 중 "+$scope.page;
+		console.log($scope.page_info);
+		console.log('max_page',$scope.max_page);
+
 
 	},fail_process);
 
 
 
-	var response = get_list_from_server($http,{cmd : 'LIST_FACTORY_KEY_ID',params : {}	} ,function(response) {
+	var response = get_list_from_server($http,{cmd : 'LIST_FACTORY_KEY_ID',params : {type:'all'}	} ,function(response) {
 
-		$scope.list_factory_key =response.data.list_param;
+		$scope.list_factory_key =response.data.list_params;
 		$scope.map_list_factory_key = make_map_from_list($scope.list_factory_key,'ftk_uid');
 		console.log($scope.map_list_factory_key);
 
@@ -64,8 +81,8 @@ $scope.bodyInit= function() {
 //     console.log('get_company_list');
 //     console.log(response.data);
 //
-// 		$scope.list_company =response.data.list_param;
-// 		console.log('test',response.data.list_param);
+// 		$scope.list_company =response.data.list_params;
+// 		console.log('test',response.data.list_params);
 // 		console.log('test',$scope.list_company);
 //
 // 		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
@@ -82,8 +99,8 @@ $scope.bodyInit= function() {
 // 	console.log('get_company_list');
 // 	console.log(response.data);
 //
-// 	$scope.list_company =response.data.list_param;
-// 	console.log('test',response.data.list_param);
+// 	$scope.list_company =response.data.list_params;
+// 	console.log('test',response.data.list_params);
 // 	console.log('test',$scope.list_company);
 //
 // 	$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
@@ -99,7 +116,7 @@ $scope.bodyInit= function() {
 // .then(function (response) {
 // 	console.log('get_contents');
 // 	console.log(response.data);
-// 	$.each(response.data.list_param, function( index, value ) {
+// 	$.each(response.data.list_params, function( index, value ) {
 // 		//$('#org_code_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='org_code_option' >{1}</a></li>",value.org_code,value.name));
 // 		console.log(value);
 // 	});
@@ -200,7 +217,7 @@ $scope.intent_title = company_info.org_name+"("+company_info.org_code+")";
 
 get_list_from_server($http,{cmd : 'LIST_INTENT_URL',params : {ogi_uid:uid}	} ,function(response) {
 	console.log(response.data);
-	$scope.list_urls=response.data.list_param;
+	$scope.list_urls=response.data.list_params;
 	$scope.hash_intent_input = get_hash_intent();
 	// if(response.data.result != "OK"){
 	// 	$scope.warning =  response.data.error;
@@ -246,9 +263,12 @@ console.log(params);
 
 	get_list_from_server($http,{cmd : 'UPDATE_COMAPANY',params :params	} ,function(response) {
 		console.log(response.data);
-		$scope.list_urls=response.data.list_param;
+		$scope.list_urls=response.data.list_params;
 		if(response.data.result == "OK"){
-			location.reload();
+			//location.reload();
+			//page_refreash($scope,$scope.max_page,'compnay_page');
+			setCookie($scope.cookie_name,$scope.max_page+1);
+		  location.reload();
 		}
 
 
@@ -272,11 +292,12 @@ $scope.modifyIntent= function() {
 
 ogi_uid = $scope.ogi_uid
 
-	get_list_from_server($http,{cmd : 'UPDATE_INTENT_URL',params :{ogi_uid:ogi_uid},list_param: $scope.list_urls}	 ,function(response) {
+	get_list_from_server($http,{cmd : 'UPDATE_INTENT_URL',params :{ogi_uid:ogi_uid},list_params: $scope.list_urls}	 ,function(response) {
 		console.log(response.data);
-		$scope.list_urls=response.data.list_param;
+		$scope.list_urls=response.data.list_params;
 		if(response.data.result == "OK"){
-			location.reload();
+			//location.reload();
+			page_refreash($scope,$scope.max_page,'compnay_page');
 		}
 		else {
 			$scope.warning =  response.data.error;
@@ -302,9 +323,16 @@ console.log('update',$scope.selectedName);
 
 }
 
+$scope.move_page= function(dst_page) {
+	console.log('move_page');
+	page_refreash($scope,dst_page,'compnay_page');
 
+}
+$scope.move_page_rel= function(direction) {
+	console.log('move_page_rel');
+	page_refreash($scope,Number($scope.page) + Number(direction),'compnay_page');
 
-
+}
 
 $scope.toggle= function() {
 	init_event($scope);

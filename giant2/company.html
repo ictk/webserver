@@ -19,7 +19,20 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
+<style>
+ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
 
+li {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border : 0;
+    float: left;
+}
+</style>
 </head>
 
 
@@ -46,6 +59,9 @@
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
 
+
+
+
     </script>
 
 
@@ -59,6 +75,7 @@
       <h2>업체 정보 입력</h2>
       <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" > 리스트보이기>></button>
 
+      <div ng-include="'page_navigation.html'"></div>
 
       <table class="w3-table w3-bordered w3-striped" ng-show='showCompanyList'>
         <tr>
@@ -76,9 +93,15 @@
         </tr>
       </table>
 
+      <!-- <div id="normalPagingNav" class="paginate">
+<a id="first_page" class="pre_end_n _stopDefault" href="javascript:;" title="처음"><span class="spr"><em class="blind">목록에서 처음 페이지 이동</em></span></a><a class="pre_n _stopDefault" href="javascript:;" title="이전" id="pre_page"><span class="spr"><em class="blind">목록에서 이전 페이지 이동</em></span></a>
+<span class="paging_numbers"><strong><span class="blind">현재 페이지:</span>1</strong><a href="#" id="2" class="num _c1(mlCore|movePage|113|2) _ccr(pag.num) _stopDefault">2<span class="blind">페이지로 이동</span></a><a href="#" id="3" class="num _c1(mlCore|movePage|113|3) _ccr(pag.num) _stopDefault">3<span class="blind">페이지로 이동</span></a><a href="#" id="4" class="num _c1(mlCore|movePage|113|4) _ccr(pag.num) _stopDefault">4<span class="blind">페이지로 이동</span></a><a href="#" id="5" class="num _c1(mlCore|movePage|113|5) _ccr(pag.num) _stopDefault">5<span class="blind">페이지로 이동</span></a><a href="#" id="6" class="num _c1(mlCore|movePage|113|6) _ccr(pag.num) _stopDefault">6<span class="blind">페이지로 이동</span></a><a href="#" id="7" class="num _c1(mlCore|movePage|113|7) _ccr(pag.num) _stopDefault">7<span class="blind">페이지로 이동</span></a><a href="#" id="8" class="num _c1(mlCore|movePage|113|8) _ccr(pag.num) _stopDefault">8<span class="blind">페이지로 이동</span></a><a href="#" id="9" class="num _c1(mlCore|movePage|113|9) _ccr(pag.num) _stopDefault">9<span class="blind">페이지로 이동</span></a><a href="#" id="10" class="num _c1(mlCore|movePage|113|10) _ccr(pag.num) _stopDefault">10<span class="blind">페이지로 이동</span></a></span>
+<span class="pageSelector" id="pageSelect" lastpage="133"><label class="blind" for="pageSelect">메일 목록 페이지 이동</label><label class="blind" for="select_page_num">이동 페이지</label><input type="text" onblur="mlCore.blurSelectPage();" onfocus="mlCore.focusSelectPage();" id="select_page_num" value="1"><span class="blind">목록 전체 페이지 수</span>/ 133</span>
+<a class="next _c1(mlCore|movePage|113|11) _stopDefault _ccr(pag.next)" href="javascript:;" title="다음" id="next_page"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a><a class="next_end _c1(mlCore|movePage|113|133) _stopDefault _ccr(pag.last)" href="javascript:;" title="끝" id="last_page"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+</div> -->
 
 
-
+<br>
       <button class="w3-btn w3-green w3-ripple" ng-click="editCompany('')">&#9998; 업체등록</button>
 
       <form ng-show="showCompanyForm" class="w3-container" id="div_input" name="div_input">

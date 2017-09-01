@@ -116,3 +116,27 @@ function getCookie(cname) {
   return "";
 
 }
+
+function page_refreash($scope,dstpage,cookie_name){
+
+
+
+	//dstpage = Number($scope.page) + Number(direct_page);
+  console.log('curpage',$scope.page);
+	if(Number(dstpage) <1){
+		dstpage =1;
+	}
+
+  console.log('dstpage',dstpage);
+
+	if(Number(dstpage) > Number($scope.max_page)){
+		dstpage = $scope.max_page;
+	}
+	if(Number(dstpage) == Number($scope.page)){
+		return;
+	}
+
+	setCookie(cookie_name,dstpage)
+  location.reload();
+
+}
