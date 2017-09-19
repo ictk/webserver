@@ -83,6 +83,7 @@ function mainController($scope, $window, $http) {
 
     console.log(chip_info);
 		$scope.sn = chip_info.sn;
+		$scope.ascii_sn = chip_info.ascii_sn;
 		$scope.auth_code = chip_info.auth_code;
 		$scope.random = chip_info.random;
 		$scope.reg_date = chip_info.reg_date;

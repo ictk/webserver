@@ -73,45 +73,12 @@ $sn= $_REQUEST["sn"];
 
 
 
-    // var jsoncontents = {
-    //   cmd:"GET_REDIRECT_INFO",
-    //   params : {
-    //     ascii_sn:sn,
-    //     os:jscd.os
-    //   }
-    // }
-		//
-    // $.ajax({
-    //   type : 'post',
-    //   dataType : 'json',
-    //   url : "giant_se/admin.do",
-		//
-    //   data : {json:JSON.stringify(jsoncontents)} ,
-		//
-    //   success :
-    //     function(data) {
-    //     console.log("rcv:",data);
-		// 		alert(jscd.os +" " +data.params.url);
-    //     $('#url_img').attr('src',data.params.url_img);
-    //     $('#goto_app').attr('href',data.params.url);
-    //     $('#description').text(data.params.description);
-		//
-    //     //succes_function(data);
-		//
-    //   },
-    //   error : function(request, status, error) {
-    //     console.log('code: ' + request.status + "\n"
-    //         + 'message: ' + request.responseText
-    //         + "\n" + 'error: ' + error);
-    //   }
-    // });
-
 
 
   });
   </script>
 <div class="">
-<img src="img/잘가요미안해요.jpg" id = 'url_img' class="img-rounded" alt="Cinque Terre" width="304" height="236">
+<img src="/img/ictk_logo.jpg" id = 'url_img' class="img-rounded" alt="Cinque Terre" >
 </div>
 <div class="well">
         <p id ='description' >NO COMPANY</p>
