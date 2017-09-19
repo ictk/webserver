@@ -51,10 +51,40 @@ function get_list_from_server($http, param, do_process, fail_process = function(
 
 }
 
+function get_list_data($scope,$http,table_name,type,uid_name,process){
+  console.log('get_list_data');
+  function fail_process(response){
+  	$scope.warning = response.data.error;
+  }
+
+
+  var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {page:$scope.page,type:type,table_name:table_name}	} ,function(response) {
+
+
+
+    $scope.list_data =response.data.list_params;
+    $scope.map_list_data = make_map_from_list($scope.list_data,uid_name);
+
+    $scope.max_page = response.data.params.max_page;
+    $scope.page = response.data.params.page;
+    $scope.page_info = $scope.max_page+"페이지 중 "+$scope.page;
+
+    process();
+    console.log($scope.page_info);
+    console.log('max_page',$scope.max_page);
+
+
+  },fail_process);
+  return response;
+
+}
+
+
 function init_body($scope) {
 	$scope.map_link={
 		company:{name:'업체관리',link:'company.html'},
 		factory_key:{name:'팩토리키관리',link:'factory_key.html'},
+    chip:{name:'칩관리',link:'chip.html'},
 		main:{name:'MAIN',link:'/'},
 
 	}

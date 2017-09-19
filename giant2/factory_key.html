@@ -56,12 +56,17 @@
         <!-- <th>Edit</th> -->
         <th>팩토리키 ID</th>
         <th>팩토리키</th>
+        <th>삭제</th>
       </tr>
       <tr ng-repeat="factory in list_factory_key">
-        <td>
+        <!-- <td>
           <button class="w3-btn w3-ripple" ng-click="editFactoryKey(factory.ftk_uid)">&#9998; {{ factory.factory_key_id }}</button>
-        </td>
+        </td> -->
+        <td>{{ factory.factory_key_id }}</td>
         <td>{{ factory.factory_key }}</td>
+        <td>
+          <button class="w3-btn w3-ripple" ng-click="deleteFactoryKey(factory.ftk_uid)">&#9998; 삭제</button>
+        </td>
       </tr>
     </table>
 
@@ -71,14 +76,14 @@
 
     <form ng-show="showFactoryKeyForm" class="w3-container" id="div_input" name="div_input">
 
-      <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; 팩토리키 ID 발생</button>
-      <br>
+      <!-- <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; 팩토리키 ID 발생</button>
+      <br> -->
       <label>팩토리키 ID:</label>
       <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key_id" placeholder="팩토리키 ID">
       <br>
 
-      <label>팩토리키 RTL (size:{{factory_key.factory_key_rtl.length/2}}/16):</label>
-      <input class="w3-input w3-border" type="text" ng-model="factory_key.factory_key_rtl" placeholder="팩토리키 RTL">
+      <label>팩토리키 (size:{{factory_key.factory_key.length/2}}/16):</label>
+      <input class="w3-input w3-border" type="text" ng-model="factory_key.factory_key" placeholder="팩토리키">
 
       <button class="w3-btn w3-green w3-ripple" ng-click="modify()">&#10004; UPDATE</button>
       <button class="w3-btn w3-green w3-ripple" ng-disabled="isNewFactoryKey" ng-click="check()">&#10004; CHECK</button>

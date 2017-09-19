@@ -44,26 +44,33 @@ $scope.bodyInit= function() {
 	console.log('compnay_page',$scope.page);
 	console.log('test2',getCookie('test2'));
 
+	get_list_data($scope,$http,'organization_info','','ogi_uid',function() {
+			$scope.list_company = $scope.list_data;
+			$scope.map_list_company = $scope.map_list_data;
+			console.log('map_list_company',$scope.map_list_company);
+
+	});
 
 
-	var response = get_list_from_server($http,{cmd : 'LIST_COMAPANY_NO',params : {page:$scope.page}	} ,function(response) {
+	//
+	// var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {page:$scope.page,table_name:'organization_info'}	} ,function(response) {
+	//
+	//
+	//
+	// 	$scope.list_company =response.data.list_params;
+	// 	$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
+	// 	$scope.max_page = response.data.params.max_page
+	// 	$scope.page = response.data.params.page
+	// 	$scope.page_info = $scope.max_page+"페이지 중 "+$scope.page;
+	// 	console.log($scope.page_info);
+	// 	console.log('max_page',$scope.max_page);
+	//
+	//
+	// },fail_process);
 
 
 
-		$scope.list_company =response.data.list_params;
-		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
-		$scope.max_page = response.data.params.max_page
-		$scope.page = response.data.params.page
-		$scope.page_info = $scope.max_page+"페이지 중 "+$scope.page;
-		console.log($scope.page_info);
-		console.log('max_page',$scope.max_page);
-
-
-	},fail_process);
-
-
-
-	var response = get_list_from_server($http,{cmd : 'LIST_FACTORY_KEY_ID',params : {type:'all'}	} ,function(response) {
+	var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {type:'all',table_name:'factory_key'}	} ,function(response) {
 
 		$scope.list_factory_key =response.data.list_params;
 		$scope.map_list_factory_key = make_map_from_list($scope.list_factory_key,'ftk_uid');
@@ -179,13 +186,16 @@ if(company_info == null){
 }else {
 	$scope.check_save = false;
 	$scope.form_type = 'update';
-	get_list_from_server($http,{cmd : 'GET_COMPANY_INFO',params : {ogi_uid:uid}	} ,function(response) {
-		console.log(response.data);
-		update_scope_company(response.data.params);
 
+	update_scope_company(company_info);
 
-	},fail_process);
-
+	// get_list_from_server($http,{cmd : 'GET_COMPANY_INFO',params : {ogi_uid:uid}	} ,function(response) {
+	// 	console.log(response.data);
+	// 	update_scope_company(response.data.params);
+	//
+	//
+	// },fail_process);
+	//
 
 
 }

@@ -28,6 +28,10 @@
 		<li><a href="/giant/chip.html">GIANT 1 칩관리</a></li>
 		<li><a href="/giant/masterkey.html">GIANT 1 키관리</a></li>
 		<li><a href="angular_test.html">angular_test</a></li>
+		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=organization_info">organization_info</a></li>
+		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=athentication_data">athentication_data</a></li>
+		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=factory_key">factory_key</a></li>
+		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=issue_info">issue_info</a></li>
 
     <!-- <li><a href="http://neo.test.com">neo.test.com</a></li>
     <li><a href="http://neo.test1.com">neo.test1.com</a></li>
