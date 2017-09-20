@@ -1,344 +1,258 @@
 
+function showHideForm($scope,showCompanyList=false,showCompanyForm=false,showUrlForm=false){
+	console.log(
+		'showHideForm'
+	);
+	console.log(
+		showCompanyList,
+		showCompanyForm,
+		showUrlForm
+	);
+	$scope.showCompanyList = showCompanyList;
+	$scope.showCompanyForm = showCompanyForm;
+	$scope.showUrlForm = showUrlForm;
 
-		//function abc(a1,a2,a3,a4);
-		$(function() {
-			console.log('ready');
-      test();
-
-
-
-      var default_info = {
-        group_0: {
-            button: {
-                id: "set_feature",
-                lable: "칩 피쳐 설정 및 시작"
-            },
-            inputs: [
-                {
-                    id: "puf",
-                    lable: "PUF"
-                },
-                {
-                    id: "factory_key_rtl",
-                    lable: "FACTORY KEY RTL"
-                }
-            ]
-        },
-        group_1: {
-            button: {
-                id: "get_sn",
-                lable: "SN 값 가져오기(from chip)"
-            },
-            inputs: [
-                {
-                    id: "sn",
-                    lable: "SN"
-                },
-                {
-                    id: "ascii_sn",
-                    lable: "ASCII SN"
-                }
-            ]
-        },
-
-      };
-
-			var input_reg_info =
-{
+	console.log(
+		$scope.showCompanyList,
+		$scope.showCompanyForm,
+	);
+	$scope.showUrlForm
 
 
-    group_2: {
-        button: {
-            id: "get_factory_key_id",
-            lable: "FACTORY KEY ID 가져오기(from server)"
-        },
-        inputs: [
-            {
-                id: "factory_key_id",
-                lable: "FACTORY  KEY ID"
-            }
-        ]
-    },
-    group_3: {
-        button: {
-            id: "get_reg_key",
-            lable: "등록 키 가져오기(from chip)"
-        },
-        inputs: [
-            {
-                id: "nonce",
-                lable: "NONCE"
-            },
-            {
-                id: "cipher",
-                lable: "CIPHER"
-            },
-            {
-                id: "mac",
-                lable: "MAC"
-            }
-        ]
-    },
-    group_4: {
-        button: {
-            id: "get_calc_mac",
-            lable: "등록 결과 가져오기 (from server)"
-        },
-        inputs: [
-            {
-                id: "calc_mac",
-                lable: "서버에서 계산된 맥값"
-            },
-            {
-                id: "result",
-                lable: "최종 결과"
-            },
-            {
-                id: "error",
-                lable: "오류값"
-            }
-        ]
-    }
-};
-var input_auth_info =
-{
-
-
-group_5: {
-  button: {
-      id: "get_random_values",
-      lable: "RANDOM VALUES 가져오기(from server)"
-  },
-  inputs: [
-      {
-          id: "random",
-          lable: "RANDOM"
-      },
-      {
-          id: "random_server",
-          lable: "RANDOM SERVER"
-      }
-  ]
-},
-group_6: {
-  button: {
-      id: "get_authentication",
-      lable: "인증 정보 가져오기(from chip)"
-  },
-  inputs: [
-
-      {
-          id: "cipher_auth",
-          lable: "CIPHER"
-      },
-      {
-          id: "mac_auth",
-          lable: "MAC"
-      }
-  ]
-},
-group_7: {
-  button: {
-      id: "req_athentication",
-      lable: "등록 결과 가져오기 (from server)"
-  },
-  inputs: [
-      {
-          id: "calc_mac_auth",
-          lable: "서버에서 계산된 맥값"
-      },
-      {
-          id: "result_auth",
-          lable: "최종 결과"
-      },
-      {
-          id: "error_auth",
-          lable: "오류값"
-      }
-  ]
 }
+
+
+
+function mainController($scope, $window,$http) {
+ console.log('myApp');
+showHideForm($scope,showCompanyList = true);
+init_body($scope);
+init_event($scope);
+$scope.page_navigation ='page_navigation.html';
+$scope.warning = '';
+$scope.indent_types = ['android','ios'];
+$scope.list_comp_names = ['ogi_uid','org_code','ftk_uid','org_name','description','url','url_img']
+$scope.cookie_name = 'compnay_page';
+$scope.showAuth = false;
+$scope.showReg = false;
+$scope.showSetFigure = true;
+console.log(document.cookie);
+console.log(window.page);
+$scope.bodyInit= function() {
+	console.log('bodyInit');
+	$scope.page = getCookie($scope.cookie_name);
+	var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {type:'all',table_name:'organization_info'}	} ,function(response) {
+
+		$scope.list_company =response.data.list_params;
+
+
+
+	},fail_process);
+
+
+
+
+}
+$scope.toggle= function(form_name) {
+	init_event($scope);
+	$scope[form_name] ^= true;
+
+
+}
+$scope.generate= function() {
+	init_event($scope);
+	console.log('generate');
+	$scope.puf=	 generateHexRandom(32);
+	// do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GENERATE_FEATURE',params : {}	} ,function(response) {
+	// 	console.log(response.data);
+	// 	$scope.puf=	response.data.params.puf;
+	// 	//$scope.factory_key_rtl=	response.data.params.factory_key_rtl;
+	//
+	//
+	//
+	//
+	//
+	// },fail_process);
+
+}
+
+$scope.set_feature= function() {
+
+
+
+	init_event($scope);
+	$scope.sn=	"";
+	$scope.ascii_sn=	"";
+	console.log('set_feature');
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'SET_FEATURE',params : {puf:$scope.puf,factory_key_rtl:$scope.factory_key_rtl}	} ,
+	function(response) {
+		console.log(response.data);
+		$scope.factory_key_rtl=	"";
+		$scope.sn=	response.data.params.sn;
+		$scope.ascii_sn=	response.data.params.ascii_sn;
+		$scope.showReg = true;
+		$scope.showSetFigure = false;
+
+
+	},fail_process);
+
+}
+
+$scope.get_sn= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+		$scope.sn=	response.data.params.sn;
+		$scope.ascii_sn=	response.data.params.ascii_sn;
+
+		$scope.showReg = true;
+		$scope.showSetFigure = false;
+
+
+
+
+
+	},fail_process);
+
+}
+
+
+$scope.get_factory_key_id= function() {
+	init_event($scope);
+	console.log('get_factory_key_id');
+	console.log($scope.selectedName);
+	if($scope.selectedName == null){
+		return;
+	}
+	do_from_server($http,'/giant_se/reg.do',{cmd : 'FACTORY_KEY_ID',params : {sn:$scope.sn,org_code:$scope.selectedName.org_code}	} ,function(response) {
+		console.log(response.data);
+		$scope.factory_key_id = response.data.params.factory_key_id;
+		$scope.atd_uid= response.data.params.atd_uid;
+
+	},fail_process);
+
+}
+
+$scope.get_reg_key= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_REG_KEY',params : {factory_key_id:$scope.factory_key_id}	} ,function(response) {
+		$scope.nonce = response.data.params.nonce;
+		$scope.cipher = response.data.params.cipher;
+		$scope.mac = response.data.params.mac;
+
+		console.log(response.data);
+	},fail_process);
+
+
+}
+$scope.get_calc_mac= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/reg.do',{cmd : 'REGISTER',params : {atd_uid:$scope.atd_uid,nonce:$scope.nonce,cipher:$scope.cipher,mac:$scope.mac}	} ,function(response) {
+		console.log(response.data);
+		$scope.calc_mac = response.data.params.calc_mac;
+		$scope.result = response.data.result;
+		$scope.error = response.data.error;
+
+		$scope.showAuth = true;
+
+	},fail_process);
+
+}
+$scope.get_random_values= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/auth.do',{cmd : 'RANDOM_VALUES',params : {sn:$scope.sn}	} ,function(response) {
+		console.log(response.data);
+		$scope.random = response.data.params.random;
+		$scope.random_server = response.data.params.random_server;
+		$scope.atd_uid = response.data.params.atd_uid;
+	},fail_process);
+
+}
+
+$scope.get_authentication= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'AUTHENTICATION',params : {random:$scope.random,random_server:$scope.random_server}	} ,function(response) {
+		console.log(response.data);
+		$scope.cipher_auth = response.data.params.cipher;
+		$scope.mac_auth = response.data.params.mac;
+	},fail_process);
+
+}
+$scope.req_athentication= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/auth.do',{cmd : 'AUTHENTICATION',params : {atd_uid:$scope.atd_uid,cipher:$scope.cipher_auth,mac:$scope.mac_auth}	} ,function(response) {
+		console.log(response.data);
+		$scope.calc_mac_auth = response.data.params.calc_mac;
+		$scope.result_auth = response.data.result;
+		$scope.error_auth = response.data.error;
+
+
+	},fail_process);
+
+}
+
+$scope.sample= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+	},fail_process);
+
+}
+$scope.sample= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+	},fail_process);
+
+}
+$scope.sample= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+	},fail_process);
+
+}
+
+$scope.sample= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+	},fail_process);
+
+}
+
+
+$scope.sample= function() {
+	init_event($scope);
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
+		console.log(response.data);
+		$scope.sn=	response.data.params.sn;
+		$scope.ascii_sn=	response.data.params.ascii_sn;
+
+
+
+
+
+
+	},fail_process);
+
+}
+function scrollTo(id) {
+	console.log('scrollTo');
+	console.log(document.location.hash);
+		 document.location.hash =id;
+		 $anchorScroll();
+	}
+function fail_process(response){
+	console.log('fail_process');
+	$scope.warning = response.data.error;
+	//console.log($('#warning_id'));
+	//document.location.href = '#warning_id';
+	//sample();
+	scrollTo('warning_id');
+}
+
+
+
+
 };
-
-
-//	console.log(input_info);
-  make_form('#default_form',default_info);
-  make_form('#reg_form',input_reg_info);
-  make_form('#auth_form',input_auth_info);
-
-  make_inputclear(input_reg_info);
-	make_inputclear(input_auth_info);
-	// $.each(input_info, function( index, value ) {
-	// 	console.log(index, value);
-  //
-	// });
-  //
-    $('#reg_form').hide();
-    $('#auth_form').hide();
-  $('#reg_toggle').click(
-      function() {
-          $('#reg_form').toggle();
-
-      });
-
-      $('#auth_toggle').click(
-          function() {
-              $('#auth_form').toggle();
-
-          });
-
-        $('#generate').click(
-            function() {
-              make_inputclear(default_info);
-              var factory_key_rtl = '5C7CCC241E71157F08E1F33D71D1049F';
-              var puf = '6B534B5A548A1E3EEF8F053B02AD7EF8';
-              $('#puf').val(puf);
-              $('#factory_key_rtl').val(factory_key_rtl);
-
-            });
-
-			btn_templtate('#set_feature', 'giant_se/simchip.do',
-			function() {
-
-        var factory_key_rtl =   $('#factory_key_rtl').val();;
-        var puf = $('#puf').val();;
-
-
-
-
-        return   {cmd : 'SET_FEATURE',params : {
-          factory_key_rtl:factory_key_rtl,
-          puf:puf
-
-        }	}	},
-			function(data) {
-				console.log(data);
-				console.log(data.params.puf);
-				console.log(data.params.factory_key_rtl);
-
-				alert("결과:"+data.result+","+data.error);
-
-				make_inputclear(input_reg_info);
-				make_inputclear(input_auth_info);
-				// $('#puf').val(data.params.puf);
-				// $('#factory_key_rtl').val(data.params.factory_key_rtl);
-
-
-
-			});
-
-			btn_templtate('#get_sn', 'giant_se/simchip.do',
-				function() {return   {cmd : 'GET_SN',params : {}	}	},
-				function(data) {
-					console.log(data);
-					console.log(data.params.sn);
-					$('#sn').val(data.params.sn);
-          $('#ascii_sn').val(data.params.ascii_sn);
-
-					$('#reg_form').show();
-					$(location).attr('href', '#reg_form')
-				});
-
-
-			btn_templtate('#get_factory_key_id', 'giant_se/reg.do',
-				function() {return   {cmd : 'FACTORY_KEY_ID',params : {
-					sn:$('#sn').val(),
-					company_no:'ictk0001'
-				}}},
-				function(data) {
-					console.log(data);
-					console.log(data.params.factory_key_id);
-					$('#factory_key_id').val(data.params.factory_key_id);
-				}
-
-
-			);
-
-			btn_templtate('#get_reg_key', 'giant_se/simchip.do',
-					function() {return   {cmd : 'GET_REG_KEY',params : {
-						factory_key_id:$('#factory_key_id').val(),
-					}}},
-					function(data) {
-						console.log(data);
-						$('#nonce').val(data.params.nonce);
-						$('#cipher').val(data.params.cipher);
-            $('#mac').val(data.params.mac);
-					}
-
-
-				);
-
-        btn_templtate('#get_calc_mac', 'giant_se/reg.do',
-  					function() {return   {cmd : 'REGISTER',params : {
-  						nonce:$('#nonce').val(),
-              cipher:$('#cipher').val(),
-              mac:$('#mac').val(),
-  					}}},
-  					function(data) {
-  						console.log(data);
-  						$('#calc_mac').val(data.params.calc_mac);
-  						$('#result').val(data.result);
-              $('#error').val(data.error);
-							if(data.result != "OK") return;
-							//alert("등록이 완료 되었습니다.");
-							//$('#reg_form').hide();
-							$('#auth_form').show();
-							$(location).attr('href', '#auth_form')
-
-  					}
-
-
-
-  				);
-
-          btn_templtate('#get_random_values', 'giant_se/auth.do',
-            function() {return   {cmd : 'RANDOM_VALUES',params : {
-              sn:$('#sn').val(),
-            }}},
-            function(data) {
-              console.log(data);
-
-              $('#random').val(data.params.random);
-              $('#random_server').val(data.params.random_server);
-            }
-
-
-          );
-
-					btn_templtate('#get_authentication', 'giant_se/simchip.do',
-						function() {return   {cmd : 'AUTHENTICATION',params : {
-							random:$('#random').val(),
-							random_server:$('#random_server').val(),
-						}}},
-						function(data) {
-							console.log(data);
-							$('#cipher_auth').val(data.params.cipher);
-							$('#mac_auth').val(data.params.mac);
-						}
-
-
-					);
-
-					btn_templtate('#req_athentication', 'giant_se/auth.do',
-						function() {return   {cmd : 'AUTHENTICATION',params : {
-							cipher:$('#cipher_auth').val(),
-							mac:$('#mac_auth').val(),
-						}}},
-						function(data) {
-							console.log(data);
-							console.log(data);
-							$('#calc_mac_auth').val(data.params.calc_mac);
-							$('#result_auth').val(data.result);
-							$('#error_auth').val(data.error);
-
-							if(data.result != "OK") return;
-							//alert("인증이 완료 되었습니다.");
-						}
-
-
-					);
-
-
-
-
-
-		});

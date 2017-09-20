@@ -4,7 +4,8 @@
 		$(function() {
 			console.log('ready');
       test();
-
+			$('#reg_form').show();
+	    $('#auth_form').show();
 
 
       var default_info = {
@@ -172,8 +173,8 @@ group_7: {
   //
 	// });
   //
-    $('#reg_form').hide();
-    $('#auth_form').hide();
+    $('#reg_form').show();
+    $('#auth_form').show();
   $('#reg_toggle').click(
       function() {
           $('#reg_form').toggle();

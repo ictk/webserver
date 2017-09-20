@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
@@ -40,7 +41,7 @@
     <script src="../js/sha256.js"></script>
     <script src="../js/util.js"></script>
     <script src="js/comm.js"></script>
-		<script src="js/company.js"></script>
+		<script src="js/sim_reg.js"></script>
 
     <script type="text/javascript">
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
@@ -57,85 +58,143 @@
 
 		<div class="col-md-6" id='div_list' >
       <h2>업체 정보 입력</h2>
-      <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" > 리스트보이기>></button>
-
-
+      <a href="#warning_id">WARNING</a>
 
       <form  class="w3-container" id="div_input" name="div_input">
         <h3 >칩 값 설정 :</h3>
-				<button class="w3-btn w3-yellow w3-ripple"  ng-click="modifyCompany()" > 칩 피쳐 발생</button>
+        <button class="w3-btn  w3-ripple"  ng-click="toggle('showSetFigure')" > 칩설정 페이지 >></button>
+        <div ng-show="showSetFigure">
+          <br>
+            <label>PUF:</label>
+            <button class="w3-btn w3-yellow w3-ripple"  ng-click="generate()" > PUF 값 발생</button>
+            <input class="w3-input w3-border" type="text" ng-model="puf"  placeholder="회사이름">
+          <br>
+
+            <label>FACTORY KEY RTL:</label>
+            <input class="w3-input w3-border" type="text" ng-model="factory_key_rtl"  placeholder="회사 번호">
+
+          <!-- <br>
+          <button class="w3-btn w3-yellow w3-ripple"  ng-click="generate()" > 칩 피쳐 발생</button> -->
+          <br>
+
+        </div>
 
 
 
-        <br>
-          <label>PUF:</label>
-          <input class="w3-input w3-border" type="text" ng-model="org_name"  placeholder="회사이름">
-        <br>
 
-          <label>FACTORY KEY RTL:</label>
-          <input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
-        <br>
 
+
+
+
+
+          <br>
 					<label>SN:</label>
-					<input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
+					<input class="w3-input w3-border" type="text" ng-model="sn"  placeholder="회사 번호">
 				<br>
 				<label>ASCII SN:</label>
-					<input class="w3-input w3-border" type="text" ng-model="org_code"  placeholder="회사 번호">
+					<input class="w3-input w3-border" type="text" ng-model="ascii_sn"  placeholder="회사 번호">
 				<br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="set_feature()" >&#10004; 칩 값 설정</button>
 
-
-
-          <label>회사 선택:</label>
-          <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_name for value in list_company">
-            <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
-          </select>
-
-
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_sn()" >&#10004; 기존 SN값 얻어오기 </button>
 
         <br>
 
+      </form>
+      <hr>
+      <button class="w3-btn  w3-ripple"  ng-click="toggle('showReg')" > 발급 페이지 >></button>
+      <form ng-show="showReg" class="w3-container" id="div_input" name="div_input">
+        <h2>등록폼</h2>
+
+        <label>회사 선택:</label>
+        <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_code for value in list_company">
+          <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+        </select>
+        <label>factory_key_id:</label>
+          <input class="w3-input w3-border" type="text" ng-model="factory_key_id"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_factory_key_id()" >&#10004; FACTORY KEY ID 가져오기(from server)</button><br><br>
 
 
-        <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
-        <button class="w3-btn w3-green w3-ripple"  ng-click="modifyCompany()" >&#10004; 시뮬 칩 기본값 설정</button>
+
+        <label>NONCE:</label>
+					<input class="w3-input w3-border" type="text" ng-model="nonce"  >
+				<br>
+        <label>CIPHER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="cipher"  >
+        <br>
+        <label>MAC:</label>
+          <input class="w3-input w3-border" type="text" ng-model="mac"  >
+        <br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_reg_key()" >&#10004; 등록 키 가져오기(from chip)</button>
+        <br><br>
+
+
+        <label>서버에서 계산된 맥값:</label>
+          <input class="w3-input w3-border" type="text" ng-model="calc_mac"  >
+        <br>
+        <label>최종 결과:</label>
+          <input class="w3-input w3-border" type="text" ng-model="result"  >
+        <br>
+        <label>오류값:</label>
+          <input class="w3-input w3-border" type="text" ng-model="error"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_calc_mac()" >&#10004; 등록 결과 가져오기 (from server)</button>
+
+
+      </form>
+      <hr>
+      <button class="w3-btn  w3-ripple"  ng-click="toggle('showAuth')" > 인증 페이지 >></button>
+
+      <form ng-show="showAuth" class="w3-container" id="div_input" name="div_input">
+        <h2>인증폼</h2>
+
+        <label>RANDOM:</label>
+          <input class="w3-input w3-border" type="text" ng-model="random"  >
+        <br>
+        <label>RANDOM SERVER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="random_server"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_random_values()" >&#10004; RANDOM VALUES 가져오기(from server)</button>
+        <br><br>
+
+
+        <label>CIPHER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="cipher_auth"  >
+        <br>
+        <label>MAC:</label>
+          <input class="w3-input w3-border" type="text" ng-model="mac_auth"  >
+        <br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_authentication()" >&#10004; 인증 정보 가져오기(from chip)</button>
+        <br><br>
+
+
+        <label>서버에서 계산된 맥값:</label>
+          <input class="w3-input w3-border" type="text" ng-model="calc_mac_auth"  >
+        <br>
+        <label>최종 결과:</label>
+          <input class="w3-input w3-border" type="text" ng-model="result_auth"  >
+        <br>
+        <label>오류값:</label>
+          <input class="w3-input w3-border" type="text" ng-model="error_auth"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="req_athentication()" >&#10004; 인증 결과 가져오기(from server)</button>
+        <br><br>
+
+
+
+
 
 
 
       </form>
-      <form ng-show="showUrlForm" class="w3-container" id="div_input" name="div_input">
-        <h2>{{intent_title}}</h2>
-        <table class="w3-table">
-          <!-- <tr>
-            <th>TYPE</th>
-            <th>INDENT</th>
-          </tr> -->
-
-        <tr ng-repeat="url in list_urls">
-          <td>
-            {{url.type}}
-          </td>
-          <td>
-            <label>INTENT</label>
-            <input class="w3-input w3-border" type="text" ng-model="url.intent"  placeholder="intent">
-            <label>STORE</label>
-            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
-
-          </td>
-          <!-- <td>
-            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
-          </td> -->
-        </tr>
-      </table>
-
-        <br>
-        <button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyIntent()" >&#10004; UPDATE</button>
-        <button class="w3-btn w3-green w3-ripple"  ng-click="editCompany(ogi_uid)" >&#x2712; 업체 정보 편집</button>
+      <hr>
+      <br>
 
 
-      </form>
       <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
 
-      <div class="alert alert-danger" ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+      <div class="alert alert-danger" id='warning_id' ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
 
       <div class="">
         <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>

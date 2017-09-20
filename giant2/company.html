@@ -81,7 +81,8 @@ li {
         <tr>
           <!-- <th>Edit</th> -->
           <th>회사이름</th>
-          <th>회사번호</th>
+          <th>Indent 편집</th>
+          <th>삭제</th>
         </tr>
         <tr ng-repeat="company in list_company">
           <td>
@@ -89,6 +90,9 @@ li {
           </td>
           <td>
           <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998; Indent 편집</button>
+          </td>
+          <td>
+          <button class="w3-btn w3-ripple" ng-click="deleteCompany(company.ogi_uid)">&#9998; 삭제</button>
           </td>
         </tr>
       </table>

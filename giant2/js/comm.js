@@ -11,8 +11,7 @@ function errorCallback(response) {
   console.log('errorCallback');
   //$scope.warning = response.status;
 }
-
-function get_list_from_server($http, param, do_process, fail_process = function(response) {}, erro_process = errorCallback) {
+function do_from_server($http,address, param, do_process, fail_process = function(response) {}, erro_process = errorCallback) {
 
   jQuery.ajaxSetup({
     async: false
@@ -21,7 +20,7 @@ function get_list_from_server($http, param, do_process, fail_process = function(
   iscomplete = false;
   var ret = {};
 
-  $http.post('/giant_se/admin.do', $.param({
+  $http.post(address, $.param({
       json: JSON.stringify(param)
     }), {
       headers: {
@@ -47,6 +46,14 @@ function get_list_from_server($http, param, do_process, fail_process = function(
 
 
   return ret;
+
+
+}
+function get_list_from_server($http, param, do_process, fail_process = function(response) {}, erro_process = errorCallback) {
+
+  return do_from_server($http,'/giant_se/admin.do', param, do_process,fail_process,erro_process);
+
+  //return ret;
 
 
 }
