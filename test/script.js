@@ -10,8 +10,9 @@ angular.module('testApp',['ngClipboard'])
 
       list_ascii_sn = [
         'ofenjicpmgcffjomfilglgegjggljcbn',
+        'bmaefpdcmnganhakffjgehenchbpbmhl',
         'lflgfdakoeamfopfkpefpfphpmcdjbio',
-        'bmaefpdcmnganhakffjgehenchbpbmhl'
+
       ];
 
       url = base_url+list_ascii_sn[idx]
