@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
   <head>
+    <meta charset="utf-8">
 
     		<!-- 합쳐지고 최소화된 최신 CSS -->
     		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -21,6 +22,7 @@
 
   <body ng-app = "testApp" ng-controller = "testController as vm">
     <div class="col-md-6" id='div_list'>
+      <form class="w3-container" id="div_input" name="div_input">
 
 
 
@@ -31,8 +33,13 @@
     <hr>
     <button class="w3-btn w3-blue w3-ripple" ng-click="sample(2)">Copy 2</button>
     <hr>
+    <label>SN:</label>
+    <input class="w3-input w3-border" type="text" ng-model="sn" ng-disabled="!check_save" placeholder="회사이름">
+    <br>
     <p>{{model}}</p>
     <hr>
+
+    </form>
           </div>
 
   </body>
