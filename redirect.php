@@ -46,8 +46,14 @@ $sn= $_REQUEST["sn"];
 			window.intent = data.params.intent;
 			window.store = data.params.store;
 			console.log(window.intent);
-			if(window.intent != '')
+			if(window.intent != ''){
 				window.location.href = window.intent;
+				console.log('goto_app');
+				alert(jscd.os +" " +window.intent);
+
+				window.location.href = window.intent;
+
+			}
 
 
 
