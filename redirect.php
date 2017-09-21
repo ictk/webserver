@@ -15,6 +15,8 @@ $sn= $_REQUEST["sn"];
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
   <script 		src="js/util.js" type="text/javascript"></script>
@@ -43,6 +45,9 @@ $sn= $_REQUEST["sn"];
 
 			window.intent = data.params.intent;
 			window.store = data.params.store;
+			console.log(window.intent);
+			if(window.intent != '')
+				window.location.href = window.intent;
 
 
 
@@ -50,6 +55,8 @@ $sn= $_REQUEST["sn"];
 		});
 
 		console.log(sn);
+
+		//window.location.href = window.intent;
 
 		$('#goto_app').click(function(){
 			console.log('goto_app');
@@ -78,7 +85,7 @@ $sn= $_REQUEST["sn"];
   });
   </script>
 <div class="">
-<img src="/img/ictk_logo.jpg" id = 'url_img' class="img-rounded" alt="Cinque Terre" >
+<img src="/img/ictk_logo.png" id = 'url_img' class="img-rounded" >
 </div>
 <div class="well">
         <p id ='description' >NO COMPANY</p>

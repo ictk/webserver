@@ -15,9 +15,11 @@ angular.module('testApp',['ngClipboard'])
 
       ];
 
-      url = base_url+list_ascii_sn[idx]
+      url = base_url+list_ascii_sn[idx];
       $scope.model=url;
       $scope.url="http://"+url;
+      $scope.url_rel="/redirect.php?sn="+list_ascii_sn[idx];
+
 
       console.log(url);
       ngClipboard.toClipboard(url);

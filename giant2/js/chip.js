@@ -30,6 +30,8 @@ function mainController($scope, $window, $http,ngClipboard) {
   showHideForm($scope, showCompanyList = true);
   init_body($scope);
   init_event($scope);
+  set_default_funcstion($scope);
+  ;
   $scope.page_navigation = 'page_navigation.html';
   $scope.warning = '';
   $scope.indent_types = ['android', 'ios'];
@@ -66,6 +68,7 @@ function mainController($scope, $window, $http,ngClipboard) {
     init_event($scope);
     showHideForm($scope, showCompanyList = false, showCompanyForm = true, showUrlForm = false);
 
+    console.log();
 
 
     $scope.warning = '';
@@ -81,7 +84,7 @@ function mainController($scope, $window, $http,ngClipboard) {
 			$scope.company_code = response.data.list_params[0].org_code;
 
 
-		},fail_process);
+		},$scope.fail_process);
 
 
     console.log(chip_info);
@@ -100,8 +103,10 @@ function mainController($scope, $window, $http,ngClipboard) {
   }
 
 
+$scope.deleteChip = function(atd_uid) {
+  deleteData($scope,$http,'atd_uid',atd_uid,'athentication_data');
 
-
+}
 
   $scope.update = function() {
     console.log('update', $scope.selectedName);
@@ -137,9 +142,9 @@ function mainController($scope, $window, $http,ngClipboard) {
     }
 
 
-  function fail_process(response) {
-    $scope.warning = response.data.error;
-  }
+  // function fail_process(response) {
+  //   $scope.warning = response.data.error;
+  // }
 
 
 

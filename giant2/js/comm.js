@@ -49,6 +49,44 @@ function do_from_server($http,address, param, do_process, fail_process = functio
 
 
 }
+function deleteData($scope,$http,uid_name,uid,table_name) {
+init_event($scope);
+  if(!confirm("정말로 삭제 하시겠습니까?")){
+    $scope.warning = 'no confirm';
+    return;
+  }
+  params = {table_name: table_name,uid_name: uid}
+  params[uid_name] = uid;
+  console.log(params);
+
+
+  get_list_from_server($http, {
+    cmd: 'DELETE_DATA',
+    params: params
+  }, function(response) {
+    console.log(response.data);
+    $scope.list_urls = response.data.list_params;
+    if (response.data.result == "OK") {
+      //location.reload();
+      //page_refreash($scope,$scope.max_page,'compnay_page');
+      //setCookie($scope.cookie_name, $scope.max_page + 1);
+      location.reload();
+    }
+
+
+
+  },$scope.fail_process);
+
+
+
+
+
+}
+function set_default_funcstion($scope){
+  $scope.fail_process =  function(response) {
+    $scope.warning = response.data.error;
+  }
+}
 function get_list_from_server($http, param, do_process, fail_process = function(response) {}, erro_process = errorCallback) {
 
   return do_from_server($http,'/giant_se/admin.do', param, do_process,fail_process,erro_process);
