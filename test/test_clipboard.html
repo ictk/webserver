@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="../js/ngClipboard.js"></script>
+    <script src="script.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body ng-app = "testApp" ng-controller = "testController as vm">
+    <h1 ng-copyable>If you click this, the whole text will be copied</h1>
+
+    <button ng-click="sample(0)">Copy 0</button>
+    <button ng-click="sample(1)">Copy 1</button>
+    <button ng-click="sample(2)">Copy 2</button>
+    <p>{{model}}</p>
+
+  </body>
+
+</html>

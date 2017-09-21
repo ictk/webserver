@@ -1,3 +1,6 @@
+
+angular.module('myApp', ['ngClipboard']).controller('userCtrl', ['$scope', '$window', '$http','ngClipboard', mainController]);
+
 function showHideForm($scope, showCompanyList = false, showCompanyForm = false, showUrlForm = false) {
   console.log(
     'showHideForm'
@@ -22,7 +25,7 @@ function showHideForm($scope, showCompanyList = false, showCompanyForm = false, 
 
 
 
-function mainController($scope, $window, $http) {
+function mainController($scope, $window, $http,ngClipboard) {
   console.log('myApp');
   showHideForm($scope, showCompanyList = true);
   init_body($scope);
@@ -126,6 +129,12 @@ function mainController($scope, $window, $http) {
   }
 
 
+    $scope.sample = function(str) {
+
+      console.log('update', $scope.selectedName);
+      ngClipboard.toClipboard(str);
+
+    }
 
 
   function fail_process(response) {

@@ -52,11 +52,12 @@
 
   <script src="../js/sha256.js"></script>
   <script src="../js/util.js"></script>
+  <script src="../js/ngClipboard.js"></script>
   <script src="js/comm.js"></script>
   <script src="js/chip.js"></script>
 
   <script type="text/javascript">
-    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window', '$http', mainController]);
+
   </script>
 
 
@@ -68,6 +69,8 @@
 
   <div class="col-md-6" id='div_list'>
     <h2>칩발급 정보</h2>
+    <button class="w3-btn w3-blue w3-ripple" ng-click="sample('FUCK THE PGH MB')"> 샘플</button>
+    <br>
     <button class="w3-btn w3-blue w3-ripple" ng-click="toggle()"> 리스트보이기>></button>
 
     <div ng-include="'page_navigation.html'"></div>
