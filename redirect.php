@@ -48,10 +48,10 @@ $sn= $_REQUEST["sn"];
 			console.log(window.intent);
 			if(window.intent != ''){
 				window.location.href = window.intent;
-				console.log('goto_app');
-				alert(jscd.os +" " +window.intent);
-
-				window.location.href = window.intent;
+				// console.log('goto_app');
+				// alert(jscd.os +" " +window.intent);
+				//
+				// window.location.href = window.intent;
 
 			}
 
@@ -66,7 +66,7 @@ $sn= $_REQUEST["sn"];
 
 		$('#goto_app').click(function(){
 			console.log('goto_app');
-			alert(jscd.os +" " +window.intent);
+			//alert(jscd.os +" " +window.intent);
 			if(jscd.os == 'iOS'){
 				var clickedAt = +new Date;
 
