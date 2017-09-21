@@ -16,6 +16,8 @@ angular.module('testApp',['ngClipboard'])
 
       url = base_url+list_ascii_sn[idx]
       $scope.model=url;
+      $scope.url="http://"+url;
+
       console.log(url);
       ngClipboard.toClipboard(url);
 
