@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-  <title>팩토리키관리</title>
+  <title>Factory Key Admin</title>
 
   <!-- 부트스트랩 -->
 
@@ -47,15 +47,15 @@
   </script>
 
   <div class="col-md-6" id='div_list' ng-show='showFactoryKeyDiv'>
-    <h2>Factory Key 관리</h2>
+    <h2>Factory Key Admin</h2>
 
     <div ng-include="'page_navigation.html'"></div>
 
     <table class="w3-table w3-bordered w3-striped">
       <tr>
         <!-- <th>Edit</th> -->
-        <th>팩토리키 ID</th>
-        <th>팩토리키</th>
+        <th>Factory Key ID</th>
+        <th>Factory Key</th>
         <th>삭제</th>
       </tr>
       <tr ng-repeat="factory in list_factory_key">
@@ -65,25 +65,25 @@
         <td>{{ factory.factory_key_id }}</td>
         <td>{{ factory.factory_key }}</td>
         <td>
-          <button class="w3-btn w3-ripple" ng-click="deleteFactoryKey(factory.ftk_uid)">&#9998; 삭제</button>
+          <button class="w3-btn w3-ripple" ng-click="deleteFactoryKey(factory.ftk_uid)">&#9998; delete</button>
         </td>
       </tr>
     </table>
 
 
-    <button class="w3-btn w3-green w3-ripple" ng-click="editFactoryKey('')">&#9998; 팩토리키등록</button>
+    <button class="w3-btn w3-green w3-ripple" ng-click="editFactoryKey('')">&#9998; Factory Key Input</button>
 
 
     <form ng-show="showFactoryKeyForm" class="w3-container" id="div_input" name="div_input">
 
-      <!-- <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; 팩토리키 ID 발생</button>
+      <!-- <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; Factory Key ID 발생</button>
       <br> -->
-      <label>팩토리키 ID:</label>
-      <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key_id" placeholder="팩토리키 ID">
+      <label>Factory Key ID:</label>
+      <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key_id" placeholder="Factory Key ID">
       <br>
 
-      <label>팩토리키 (size:{{factory_key.factory_key.length/2}}/16):</label>
-      <input class="w3-input w3-border" type="text" ng-model="factory_key.factory_key" placeholder="팩토리키">
+      <label>Factory Key (size:{{factory_key.factory_key.length/2}}/16):</label>
+      <input class="w3-input w3-border" type="text" ng-model="factory_key.factory_key" placeholder="Factory Key">
 
       <button class="w3-btn w3-green w3-ripple" ng-click="modify()">&#10004; UPDATE</button>
       <button class="w3-btn w3-green w3-ripple" ng-disabled="isNewFactoryKey" ng-click="check()">&#10004; CHECK</button>

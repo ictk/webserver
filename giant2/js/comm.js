@@ -112,7 +112,7 @@ function get_list_data($scope,$http,table_name,type,uid_name,process){
 
     $scope.max_page = response.data.params.max_page;
     $scope.page = response.data.params.page;
-    $scope.page_info = $scope.max_page+"페이지 중 "+$scope.page;
+    $scope.page_info = $scope.page+"/"+$scope.max_page;
 
     process();
     console.log($scope.page_info);
@@ -127,9 +127,11 @@ function get_list_data($scope,$http,table_name,type,uid_name,process){
 
 function init_body($scope) {
 	$scope.map_link={
-		company:{name:'업체관리',link:'company.html'},
-		factory_key:{name:'팩토리키관리',link:'factory_key.html'},
-    chip:{name:'칩관리',link:'chip.html'},
+		company:{name:'ORG ADMIN',link:'company.html'},
+		factory_key:{name:'FACTORY KEY ADMIN',link:'factory_key.html'},
+    chip:{name:'CHIP ADMIN',link:'chip.html'},
+    simregauth:{name:'SIMUL REG and AUTH',link:'sim_reg.html'},
+    event_record:{name:'EVENT RECORD',link:'event_record.html'},
 		main:{name:'MAIN',link:'/'},
 
 	}
