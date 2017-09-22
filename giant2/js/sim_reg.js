@@ -92,6 +92,7 @@ $scope.set_feature= function() {
 		$scope.ascii_sn=	response.data.params.ascii_sn;
 		$scope.showReg = true;
 		$scope.showSetFigure = false;
+		alert("성공");
 
 
 	},fail_process);
@@ -107,6 +108,7 @@ $scope.get_sn= function() {
 
 		$scope.showReg = true;
 		$scope.showSetFigure = false;
+		alert("성공");
 
 
 
@@ -128,6 +130,7 @@ $scope.get_factory_key_id= function() {
 		console.log(response.data);
 		$scope.factory_key_id = response.data.params.factory_key_id;
 		$scope.atd_uid= response.data.params.atd_uid;
+		alert("성공");
 
 	},fail_process);
 
@@ -139,6 +142,7 @@ $scope.get_reg_key= function() {
 		$scope.nonce = response.data.params.nonce;
 		$scope.cipher = response.data.params.cipher;
 		$scope.mac = response.data.params.mac;
+		alert("성공");
 
 		console.log(response.data);
 	},fail_process);
@@ -154,6 +158,7 @@ $scope.get_calc_mac= function() {
 		$scope.error = response.data.error;
 
 		$scope.showAuth = true;
+		alert("성공");
 
 	},fail_process);
 
@@ -165,6 +170,7 @@ $scope.get_random_values= function() {
 		$scope.random = response.data.params.random;
 		$scope.random_server = response.data.params.random_server;
 		$scope.atd_uid = response.data.params.atd_uid;
+		alert("성공");
 	},fail_process);
 
 }
@@ -175,6 +181,7 @@ $scope.get_authentication= function() {
 		console.log(response.data);
 		$scope.cipher_auth = response.data.params.cipher;
 		$scope.mac_auth = response.data.params.mac;
+		alert("성공");
 	},fail_process);
 
 }
@@ -185,6 +192,7 @@ $scope.req_athentication= function() {
 		$scope.calc_mac_auth = response.data.params.calc_mac;
 		$scope.result_auth = response.data.result;
 		$scope.error_auth = response.data.error;
+		alert("성공");
 
 
 	},fail_process);
@@ -195,6 +203,7 @@ $scope.sample= function() {
 	init_event($scope);
 	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
 		console.log(response.data);
+
 	},fail_process);
 
 }
@@ -249,6 +258,7 @@ function fail_process(response){
 	//console.log($('#warning_id'));
 	//document.location.href = '#warning_id';
 	//sample();
+	alert("실패:\n"+response.data.error);
 	scrollTo('warning_id');
 }
 

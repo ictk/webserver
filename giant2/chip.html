@@ -79,14 +79,14 @@
       <tr>
         <!-- <th>Edit</th> -->
         <th>SN</th>
-        <th>등록일</th>
+        <th>발급상태</th>
         <th>삭제</th>
       </tr>
       <tr ng-repeat="chip in list_chip">
         <td>
           <button class="w3-btn w3-ripple" ng-click="viewChip(chip.atd_uid)">&#9998; {{ chip.sn }}</button>
         </td>
-        <td>{{ chip.reg_date }}</td>
+        <td>{{ chip.status }}</td>
         <td>
           <button class="w3-btn w3-ripple" ng-click="deleteChip(chip.atd_uid)">&#9998; 삭제</button>
         </td>
