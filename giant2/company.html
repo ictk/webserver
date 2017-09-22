@@ -81,7 +81,7 @@ li {
         <tr>
           <!-- <th>Edit</th> -->
           <th>name</th>
-          <th>Indent edit</th>
+          <th>Intent edit</th>
           <th>delete</th>
         </tr>
         <tr ng-repeat="company in list_company">
@@ -89,7 +89,7 @@ li {
             <button class="w3-btn w3-ripple" ng-click="editCompany(company.ogi_uid)">&#9998; {{ company.org_name }}</button>
           </td>
           <td>
-          <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998; Indent edit</button>
+          <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998; Intent edit</button>
           </td>
           <td>
           <button class="w3-btn w3-ripple" ng-click="deleteCompany(company.ogi_uid)">&#9998; delete</button>
@@ -149,7 +149,7 @@ li {
 
         <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
         <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="modifyCompany()" >&#10004; UPDATE</button>
-        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(ogi_uid)" >&#x2712; INDENT edit</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(ogi_uid)" >&#x2712; Intent edit</button>
 
 
       </form>
