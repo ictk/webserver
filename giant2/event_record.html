@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+  <title>팩토리키관리</title>
+
+  <!-- 부트스트랩 -->
+
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+  <script src="../js/sha256.js"></script>
+  <script src="../js/util.js"></script>
+  <script src="js/comm.js"></script>
+  <script src="js/event_record.js"></script>
+
+
+</head>
+
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
+
+
+  <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window', '$http', mainController]);
+  </script>
+
+  <div class="col-md-6" id='div_list' ng-show='showFactoryKeyDiv'>
+    <h2>AUTH RECORD</h2>
+
+    <div ng-include="'page_navigation.html'"></div>
+
+    <table class="w3-table w3-bordered w3-striped">
+      <tr>
+        <!-- <th>Edit</th> -->
+        <th>SN</th>
+        <th>RESULT</th>
+        <th>ERROR</th>
+        <th>DATE</th>
+      </tr>
+      <tr ng-repeat="event_record in list_event_record">
+        <!-- <td>
+          <button class="w3-btn w3-ripple" ng-click="editFactoryKey(factory.ftk_uid)">&#9998; {{ factory.factory_key_id }}</button>
+        </td> -->
+        <td>{{ event_record.sn }}</td>
+        <td>{{ event_record.result }}</td>
+        <td>{{ event_record.error }}</td>
+        <td>{{ event_record.updt_date }}</td>
+      </tr>
+    </table>
+
+
+    <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
+
+    <div class="alert alert-danger" ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+
+    <div class="">
+      <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>
+  	</div>
+
+
+
+
+
+
+
+</body>
+
+</html>
