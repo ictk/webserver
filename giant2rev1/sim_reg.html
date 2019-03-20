@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>SIMUL REG AND AUTH</title>
+
+    <!-- 부트스트랩 -->
+
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+</head>
+
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="../js/sha256.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="js/comm.js"></script>
+		<script src="js/sim_reg.js"></script>
+
+    <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
+
+
+    </script>
+
+
+
+
+
+
+
+
+		<div class="col-md-6" id='div_list' >
+      <h2>SIMUL REG AND AUTH</h2>
+      <form  class="w3-container" id="div_input" name="div_input">
+        <h3 >set figure chip :</h3>
+        <button class="w3-btn  w3-ripple"  ng-click="toggle('showSetFigure')" > set figure page >></button>
+        <div ng-show="showSetFigure">
+          <br>
+            <label>PUF:</label>
+            <button class="w3-btn w3-yellow w3-ripple"  ng-click="generate()" > generate PUF </button>
+            <input class="w3-input w3-border" type="text" ng-model="puf"  >
+          <br>
+
+            <label>FACTORY KEY RTL:</label>
+            <input class="w3-input w3-border" type="text" ng-model="factory_key_rtl"  >
+
+          <!-- <br>
+          <button class="w3-btn w3-yellow w3-ripple"  ng-click="generate()" > 칩 피쳐 발생</button> -->
+          <br>
+
+        </div>
+
+
+
+
+
+
+
+
+
+          <br>
+					<label>SN:</label>
+					<input class="w3-input w3-border" type="text" ng-model="sn"  >
+				<br>
+				<label>ASCII SN:</label>
+					<input class="w3-input w3-border" type="text" ng-model="ascii_sn"  >
+				<br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="set_feature()" >&#10004; set figure chip</button>
+
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_sn()" >&#10004; get sn from simul server </button>
+
+        <br>
+
+      </form>
+      <hr>
+      <button class="w3-btn  w3-ripple"  ng-click="toggle('showReg')" > reg page >></button>
+      <form ng-show="showReg" class="w3-container" id="div_input" name="div_input">
+        <h2>reg form</h2>
+
+        <label>select org:</label>
+        <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_code for value in list_company">
+          <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+        </select>
+        <label>factory_key_id:</label>
+          <input class="w3-input w3-border" type="text" ng-model="factory_key_id"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_factory_key_id()" >&#10004; get FACTORY KEY ID(from server)</button><br><br>
+
+
+
+        <label>NONCE:</label>
+					<input class="w3-input w3-border" type="text" ng-model="nonce"  >
+				<br>
+        <label>CIPHER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="cipher"  >
+        <br>
+        <label>MAC:</label>
+          <input class="w3-input w3-border" type="text" ng-model="mac"  >
+        <br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_reg_key()" >&#10004; get reg key (from chip)</button>
+        <br><br>
+
+
+        <label>calc mac from server:</label>
+          <input class="w3-input w3-border" type="text" ng-model="calc_mac"  >
+        <br>
+        <label>RESULT:</label>
+          <input class="w3-input w3-border" type="text" ng-model="result"  >
+        <br>
+        <label>ERROR:</label>
+          <input class="w3-input w3-border" type="text" ng-model="error"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_calc_mac()" >&#10004; register (from server)</button>
+
+
+      </form>
+      <hr>
+      <button class="w3-btn  w3-ripple"  ng-click="toggle('showAuth')" > auth page >></button>
+
+      <form ng-show="showAuth" class="w3-container" id="div_input" name="div_input">
+        <h2>auth form</h2>
+
+        <label>RANDOM:</label>
+          <input class="w3-input w3-border" type="text" ng-model="random"  >
+        <br>
+        <label>RANDOM SERVER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="random_server"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_random_values()" >&#10004;get  RANDOM VALUES (from server)</button>
+        <br><br>
+
+
+        <label>CIPHER:</label>
+          <input class="w3-input w3-border" type="text" ng-model="cipher_auth"  >
+        <br>
+        <label>MAC:</label>
+          <input class="w3-input w3-border" type="text" ng-model="mac_auth"  >
+        <br>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="get_authentication()" >&#10004; get auth info (from chip)</button>
+        <br><br>
+
+
+        <label>calc mac from server:</label>
+          <input class="w3-input w3-border" type="text" ng-model="calc_mac_auth"  >
+        <br>
+        <label>RESULT:</label>
+          <input class="w3-input w3-border" type="text" ng-model="result_auth"  >
+        <br>
+        <label>ERROR:</label>
+          <input class="w3-input w3-border" type="text" ng-model="error_auth"  >
+        <br>
+        <button class="w3-btn w3-khaki w3-ripple"  ng-click="req_athentication()" >&#10004; authenticate (from server)</button>
+        <br><br>
+
+
+
+
+
+
+
+      </form>
+      <hr>
+      <br>
+
+
+      <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
+
+      <div class="alert alert-danger" id='warning_id' ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+
+      <div class="">
+        <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>
+    	</div>
+
+
+    </div>
+    <br>
+    <br>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

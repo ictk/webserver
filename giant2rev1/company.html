@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>ORG ADMIN</title>
+
+    <!-- 부트스트랩 -->
+
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<style>
+ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+li {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border : 0;
+    float: left;
+}
+</style>
+</head>
+
+
+<body ng-app="myApp" ng-controller="userCtrl" ng-init='bodyInit()'>
+
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+    <script src="../js/sha256.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="js/comm.js"></script>
+		<script src="js/company.js"></script>
+
+    <script type="text/javascript">
+    angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+		<div class="col-md-6" id='div_list' >
+      <h2>ORGANIZATION INFO</h2>
+      <button class="w3-btn w3-blue w3-ripple"  ng-click="toggle()" > show list>></button>
+
+      <div ng-include="'page_navigation.html'"></div>
+
+      <table class="w3-table w3-bordered w3-striped" ng-show='showCompanyList'>
+        <tr>
+          <!-- <th>Edit</th> -->
+          <th>name</th>
+          <th>Intent edit</th>
+          <th>delete</th>
+        </tr>
+        <tr ng-repeat="company in list_company">
+          <td>
+            <button class="w3-btn w3-ripple" ng-click="editCompany(company.ogi_uid)">&#9998; {{ company.org_name }}</button>
+          </td>
+          <td>
+          <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998; Intent edit</button>
+          </td>
+          <td>
+          <button class="w3-btn w3-ripple" ng-click="deleteCompany(company.ogi_uid)">&#9998; delete</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- <div id="normalPagingNav" class="paginate">
+<a id="first_page" class="pre_end_n _stopDefault" href="javascript:;" title="처음"><span class="spr"><em class="blind">목록에서 처음 페이지 이동</em></span></a><a class="pre_n _stopDefault" href="javascript:;" title="이전" id="pre_page"><span class="spr"><em class="blind">목록에서 이전 페이지 이동</em></span></a>
+<span class="paging_numbers"><strong><span class="blind">현재 페이지:</span>1</strong><a href="#" id="2" class="num _c1(mlCore|movePage|113|2) _ccr(pag.num) _stopDefault">2<span class="blind">페이지로 이동</span></a><a href="#" id="3" class="num _c1(mlCore|movePage|113|3) _ccr(pag.num) _stopDefault">3<span class="blind">페이지로 이동</span></a><a href="#" id="4" class="num _c1(mlCore|movePage|113|4) _ccr(pag.num) _stopDefault">4<span class="blind">페이지로 이동</span></a><a href="#" id="5" class="num _c1(mlCore|movePage|113|5) _ccr(pag.num) _stopDefault">5<span class="blind">페이지로 이동</span></a><a href="#" id="6" class="num _c1(mlCore|movePage|113|6) _ccr(pag.num) _stopDefault">6<span class="blind">페이지로 이동</span></a><a href="#" id="7" class="num _c1(mlCore|movePage|113|7) _ccr(pag.num) _stopDefault">7<span class="blind">페이지로 이동</span></a><a href="#" id="8" class="num _c1(mlCore|movePage|113|8) _ccr(pag.num) _stopDefault">8<span class="blind">페이지로 이동</span></a><a href="#" id="9" class="num _c1(mlCore|movePage|113|9) _ccr(pag.num) _stopDefault">9<span class="blind">페이지로 이동</span></a><a href="#" id="10" class="num _c1(mlCore|movePage|113|10) _ccr(pag.num) _stopDefault">10<span class="blind">페이지로 이동</span></a></span>
+<span class="pageSelector" id="pageSelect" lastpage="133"><label class="blind" for="pageSelect">메일 목록 페이지 이동</label><label class="blind" for="select_page_num">이동 페이지</label><input type="text" onblur="mlCore.blurSelectPage();" onfocus="mlCore.focusSelectPage();" id="select_page_num" value="1"><span class="blind">목록 전체 페이지 수</span>/ 133</span>
+<a class="next _c1(mlCore|movePage|113|11) _stopDefault _ccr(pag.next)" href="javascript:;" title="다음" id="next_page"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a><a class="next_end _c1(mlCore|movePage|113|133) _stopDefault _ccr(pag.last)" href="javascript:;" title="끝" id="last_page"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+</div> -->
+
+
+<br>
+      <button class="w3-btn w3-green w3-ripple" ng-click="editCompany('')">&#9998; ORG INFO INPUT</button>
+
+      <form ng-show="showCompanyForm" class="w3-container" id="div_input" name="div_input">
+        <h3 ng-show="form_type=='new'">Insert New chip:</h3>
+        <h3 ng-show="form_type=='update'">Update Master Key:</h3>
+
+        <label>modify:
+          <input type="checkbox" ng-model="check_save" ng-click="editable()">
+        </label><br/>
+
+        <br>
+          <label>name:</label>
+          <input class="w3-input w3-border" type="text" ng-model="org_name" ng-disabled="!check_save" >
+        <br>
+
+          <label>code:</label>
+          <input class="w3-input w3-border" type="text" ng-model="org_code" ng-disabled="!check_save" >
+        <br>
+
+          <label>factory key ID:</label>
+          <select class="w3-input w3-border" ng-model="selectedName"  ng-disabled="!check_save" ng-options="value.factory_key_id for value in list_factory_key">
+            <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+          </select>
+
+        <br>
+            <label>description</label>
+            <input class="w3-input w3-border" type="text" ng-model="description" ng-disabled="!check_save" >
+
+        <br>
+            <label>URL</label>
+            <input class="w3-input w3-border" type="text" ng-model="url" ng-disabled="!check_save" >
+        <br>
+            <label>image url</label>
+            <input class="w3-input w3-border" type="text" ng-model="url_img" ng-disabled="!check_save" >
+
+
+
+        <br>
+
+
+
+        <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
+        <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="modifyCompany()" >&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(ogi_uid)" >&#x2712; Intent edit</button>
+
+
+      </form>
+      <form ng-show="showUrlForm" class="w3-container" id="div_input" name="div_input">
+        <h2>{{intent_title}}</h2>
+        <table class="w3-table">
+          <!-- <tr>
+            <th>TYPE</th>
+            <th>INDENT</th>
+          </tr> -->
+
+        <tr ng-repeat="url in list_urls">
+          <td>
+            {{url.type}}
+          </td>
+          <td>
+            <label>INTENT</label>
+            <input class="w3-input w3-border" type="text" ng-model="url.intent"  placeholder="intent">
+            <label>STORE</label>
+            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
+
+          </td>
+          <!-- <td>
+            <input class="w3-input w3-border" type="text" ng-model="url.store"  placeholder="store">
+          </td> -->
+        </tr>
+      </table>
+
+        <br>
+        <button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyIntent()" >&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editCompany(ogi_uid)" >&#x2712; modify info</button>
+
+
+      </form>
+      <div class="alert alert-success" ng-hide="msg == ''"><strong>MSG!</strong> {{msg}} </div>
+
+      <div class="alert alert-danger" ng-hide="warning == ''"> <strong>Warning!</strong> {{warning}}  </div>
+
+      <div class="">
+        <button class="w3-btn w3-blue w3-ripple"  ng-repeat="(key,value) in map_link" ng-click="gourl(key)" > {{value.name}}</button>
+    	</div>
+
+
+    </div>
+    <br>
+    <br>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
