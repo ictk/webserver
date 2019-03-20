@@ -89,7 +89,7 @@ function set_default_funcstion($scope){
 }
 function get_list_from_server($http, param, do_process, fail_process = function(response) {}, erro_process = errorCallback) {
 
-  return do_from_server($http,'/giant_se/admin.do', param, do_process,fail_process,erro_process);
+  return do_from_server($http,'/giant_se_rev1/admin.do', param, do_process,fail_process,erro_process);
 
   //return ret;
 

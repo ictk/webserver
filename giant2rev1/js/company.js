@@ -87,7 +87,7 @@ function mainController($scope, $window, $http) {
 
     //
     //
-    //   $http.post('/giant_se/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_COMAPANY_NO',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+    //   $http.post('/giant_se_rev1/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_COMAPANY_NO',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
     // //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
     //   .then(function (response) {
     //     console.log('get_company_list');
@@ -105,7 +105,7 @@ function mainController($scope, $window, $http) {
     //   }
     // );
     //
-    // $http.post('/giant_se/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_FACTORY_KEY_ID',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
+    // $http.post('/giant_se_rev1/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_FACTORY_KEY_ID',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
     // //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
     // .then(function (response) {
     // 	console.log('get_company_list');
