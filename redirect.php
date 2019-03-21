@@ -1,5 +1,7 @@
 <?php
 $sn= $_REQUEST["sn"];
+$random= $_REQUEST["random"];
+$auth_code= $_REQUEST["auth_code"];
 
 ?>
 <!DOCTYPE html>
@@ -21,17 +23,25 @@ $sn= $_REQUEST["sn"];
   <script type="text/javascript">
     $(function() {
       console.log('ready');
+
       var sn = '<?php echo $sn; ?>';
+      var random = '<?php echo $random; ?>';
+      var auth_code = '<?php echo $auth_code; ?>';
+
       var jscd = get_naviinfo();
 
-      ajax_templtate('giant_se/admin.do',
+      ajax_templtate('giant_se/auth.do',
         function() {
 
           return {
-            cmd: 'GET_REDIRECT_INFO',
+            cmd: 'AUTHENTICATION',
             params: {
-              ascii_sn: sn,
+              mode: 'ascii',
+              sn: sn,
+              random: random,
+              auth_code: auth_code,
               os: jscd.os
+
             }
           }
 
@@ -136,6 +146,9 @@ $sn= $_REQUEST["sn"];
 
 <hr>
 <div class=" w3-center">
+  <p>'<?php echo $sn; ?>';</p>
+  <p>'<?php echo $random; ?>';</p>
+  <p>'<?php echo $auth_code; ?>';</p>
 <button class="w3-btn w3-green w3-center"  id='goto_app'>앱으로 이동</button>
 </div>
 
