@@ -138,17 +138,20 @@ function mainController($scope, $window, $http) {
         org_code: '',
         ftk_uid: '',
         org_name: '',
-        factory_key_id: '',
-        factory_key: '',
         description: '',
         url: '',
         url_img: '',
+        ndef_option:'',
+        factory_key_id:'',
+        factory_key:'',
+        input_auth:'',
+
       }
       update_scope_company(company_info);
       $scope.form_type = 'new';
       $scope.check_save = true;
 
-    
+
     } else {
       $scope.check_save = false;
       $scope.form_type = 'update';
@@ -329,28 +332,32 @@ function mainController($scope, $window, $http) {
 
     hashname = get_Hash_name($scope.list_comp_names);
 
-    if ($scope.company_hashname == hashname) {
-      $scope.warning = "변경된 값이 없습니다.";
-      return;
-    }
+    // if ($scope.company_hashname == hashname) {
+    //   $scope.warning = "변경된 값이 없습니다.";
+    //   return;
+    // }
 
     console.log($scope.company_hashname);
 
-    update_organization_info = function(ftk_uid){
+
       params = {
-        table_name: 'organization_info',
-        ogi_uid: $scope.ogi_uid,
-        ftk_uid:ftk_uid,
-        org_code: $scope.org_code,
-        org_name: $scope.org_name,
-        description: $scope.description,
-        url: $scope.url,
-        url_img: $scope.url_img,
+        ogi_uid:$scope.company_info.ogi_uid,
+        org_name:$scope.company_info.org_name,
+        org_code:$scope.company_info.org_code,
+        description:$scope.company_info.description,
+        url:$scope.company_info.url,
+        url_img:$scope.company_info.url_img,
+        ndef_option:$scope.company_info.ndef_option,
+        factory_key_id:$scope.company_info.factory_key_id,
+        factory_key:$scope.company_info.factory_key,
+        input_auth:$scope.company_info.input_auth,
+
 
 
       }
+      console.log(params);
     get_list_from_server($http,
-      {   cmd: 'UPDATE_DATA',      params: params  },
+      {   cmd: 'UPDATE_ORGANIZATION',      params: params  },
       function(response) {
         console.log(response.data);
         $scope.list_urls = response.data.list_params;
@@ -358,39 +365,50 @@ function mainController($scope, $window, $http) {
           //location.reload();
           //page_refreash($scope,$scope.max_page,'compnay_page');
           setCookie($scope.cookie_name, $scope.max_page + 1);
-          location.reload();
-        }
-
-
-
-      }, fail_process);
-  }
-
-   if(!$scope.ogi_uid){
-      get_list_from_server($http, {
-        cmd: 'UPDATE_DATA',
-        params: {    table_name: 'factory_key',    ftk_uid:"",   }
-      }, function(response) {
-        console.log(response.data);
-        $scope.list_urls = response.data.list_params;
-        if (response.data.result == "OK") {
           //location.reload();
-          //page_refreash($scope,$scope.max_page,'compnay_page');
-          console.log(response.data.params.ftk_uid);
-          update_organization_info(response.data.params.ftk_uid);
-
-
-
         }
 
 
 
       }, fail_process);
 
-    }
-    else {
-      update_organization_info($scope.ftk_uid);
-    }
+  // params_factory_key = {
+  //   table_name: 'factory_key',
+  //   ogi_uid: $scope.ogi_uid,
+  //   ftk_uid:ftk_uid,
+  //   org_code: $scope.org_code,
+  //   org_name: $scope.org_name,
+  //   description: $scope.description,
+  //   url: $scope.url,
+  //   url_img: $scope.url_img,
+  //
+  //
+  // }
+  //  if($scope.company_info.ftk_uid==""){
+  //     get_list_from_server($http, {
+  //       cmd: 'UPDATE_DATA',
+  //       params: {    table_name: 'factory_key',    ftk_uid:"",   }
+  //     }, function(response) {
+  //       console.log(response.data);
+  //       $scope.list_urls = response.data.list_params;
+  //       if (response.data.result == "OK") {
+  //         //location.reload();
+  //         //page_refreash($scope,$scope.max_page,'compnay_page');
+  //         console.log(response.data.params.ftk_uid);
+  //         update_organization_info(response.data.params.ftk_uid);
+  //
+  //
+  //
+  //       }
+  //
+  //
+  //
+  //     }, fail_process);
+  //
+  //   }
+  //   else {
+  //     update_organization_info($scope.ftk_uid);
+  //   }
 
 
 

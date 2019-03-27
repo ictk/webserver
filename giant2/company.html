@@ -81,16 +81,12 @@ li {
         <tr>
           <!-- <th>Edit</th> -->
           <th>name</th>
-          <th>Factory Key</th>
           <th>Intent </th>
           <th>delete</th>
         </tr>
         <tr ng-repeat="company in list_company">
           <td>
             <button class="w3-btn w3-ripple" ng-click="editCompany(company.ogi_uid)">&#9998; {{ company.org_name }}</button>
-          </td>
-          <td>
-            <button class="w3-btn w3-ripple" ng-click="editFactoryKey(company.ftk_uid)" >&#9998; {{ company.ndef_option }} </button>
           </td>
           <td>
           <button class="w3-btn w3-ripple" ng-click="editIndent(company.ogi_uid)">&#9998;  edit</button>
@@ -138,23 +134,23 @@ li {
 
 
 
-        <label>Factory Key (size:{{factory_key.factory_key.length/2}}/16):</label>
+        <label>Factory Key (size:{{company_info.factory_key.length/2}}/16):</label>
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.factory_key" placeholder="Factory Key">
         <br>
-        <label>Input Auth (size:{{factory_key.input_auth.length/2}}/9):</label>
+        <label>Input Auth (size:{{company_info.input_auth.length/2}}/9):</label>
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.input_auth" placeholder="Input Auth">
         <br>
 
 
             <label>description</label>
-            <input class="w3-input w3-border" type="text" ng-model="description" ng-disabled="!check_save" >
+            <input class="w3-input w3-border" type="text" ng-model="company_info.description" ng-disabled="!check_save" >
 
         <br>
             <label>URL</label>
-            <input class="w3-input w3-border" type="text" ng-model="url" ng-disabled="!check_save" >
+            <input class="w3-input w3-border" type="text" ng-model="company_info.url" ng-disabled="!check_save" >
         <br>
             <label>image url</label>
-            <input class="w3-input w3-border" type="text" ng-model="url_img" ng-disabled="!check_save" >
+            <input class="w3-input w3-border" type="text" ng-model="company_info.url_img" ng-disabled="!check_save" >
 
 
 
@@ -166,7 +162,7 @@ li {
 
         <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
         <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="modifyCompany()" >&#10004; UPDATE</button>
-        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(ogi_uid)" >&#x2712; Intent edit</button>
+        <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(company_info.ogi_uid)" >&#x2712; Intent edit</button>
 
 
       </form>
@@ -198,34 +194,6 @@ li {
         <br>
         <button class="w3-btn w3-green w3-ripple" ng-disabled="incomplete" ng-click="modifyIntent()" >&#10004; UPDATE</button>
         <button class="w3-btn w3-green w3-ripple"  ng-click="editCompany(ogi_uid)" >&#x2712; modify info</button>
-
-
-      </form>
-      <form ng-show="showFactoryKeyForm" class="w3-container" id="div_input" name="div_input">
-        <label>modify:
-          <input type="checkbox" ng-model="isNewFactoryKey" ng-click="editable_factory_key()">
-        </label><br/>
-        <!-- <button class="w3-btn w3-green w3-ripple" ng-disabled="!isNewFactoryKey" ng-click="generate_factory_key_id()">&#10004; Factory Key ID 발생</button>
-        <br> -->
-        <label>Ndef Option:</label>
-        <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.ndef_option" placeholder="Ndef Option">
-        <br>
-        <label>Factory Key ID:</label>
-        <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key_id" placeholder="Factory Key ID">
-        <br>
-
-
-
-        <label>Factory Key (size:{{factory_key.factory_key.length/2}}/16):</label>
-        <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.factory_key" placeholder="Factory Key">
-        <br>
-        <label>Input Auth (size:{{factory_key.input_auth.length/2}}/9):</label>
-        <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.input_auth" placeholder="Input Auth">
-        <br>
-
-        <button class="w3-btn w3-green w3-ripple" ng-click="modifyFactoryKey()">&#10004; UPDATE</button>
-        <button class="w3-btn w3-green w3-ripple" ng-disabled="isNewFactoryKey" ng-click="check()">&#10004; CHECK</button>
-
 
 
       </form>
