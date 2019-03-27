@@ -27,7 +27,9 @@
 		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=factory_key">factory_key</a></li>
 		<li><a href="/giant_se/admin.do?cmd=LIST_DATA&type=all&table_name=issue_info">issue_info</a></li>
 		<li><a href="http://g2iihi2z-i.com/cpbdnjacjdpicbegeabfbibbmpiepggd/gaodigbdcccfjhgd/eoomjlmmpfaogglopcbiahgdncephkdj">자동연결테스트</a></li>
-		
+		<li><a href="/cpbdnjacjdpicbegeabfbibbmpiepggd/gaodigbdcccfjhgd/eoomjlmmpfaogglopcbiahgdncephkdj">자동연결테스트 상대좌표</a></li>
+		<li><a href="/cpbdnjacjdpicbegeabfbibbmpiepggd/gaodigbdaccfjhgd/eoomjlmmpfaogglopcbiahgdncephkdj">자동연결테스트 틀린정보 상대좌표</a></li>
+
 	</ul>
 	<h2>G2 REV1</h2>
 	<ul>

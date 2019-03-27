@@ -90,6 +90,16 @@ function mainController($scope, $window, $http) {
   $scope.editable = function() {
     console.log('editable');
     console.log('editable', $scope.check_save);
+    if($scope.check_save){
+      $scope.company_info.factory_key ="";
+      $scope.company_info.input_auth ="";
+    }
+    else{
+      $scope.company_info.factory_key =$scope.company_info_org.factory_key;
+      $scope.company_info.input_auth =$scope.company_info_org.input_auth;
+
+    }
+
     //$scope.edit = true;
 
   }
@@ -138,24 +148,7 @@ function mainController($scope, $window, $http) {
       $scope.form_type = 'new';
       $scope.check_save = true;
 
-      $scope.list_urls = [{
-          type: 'android',
-          indent: '',
-          store: ''
-        },
-        {
-          type: 'ios',
-          indent: '',
-          store: ''
-        },
-        {
-          type: 'windows',
-          indent: '',
-          store: ''
-        },
-      ];
-
-
+    
     } else {
       $scope.check_save = false;
       $scope.form_type = 'update';
@@ -188,7 +181,7 @@ function mainController($scope, $window, $http) {
       }
     }, function(response) {
       console.log(response.data);
-  
+
 
       $scope.list_urls = response.data.list_params;
 
@@ -246,14 +239,92 @@ function mainController($scope, $window, $http) {
 
 
   }
+  $scope.deleteFactoryKey = function(uid) {
+    init_event($scope);
+    console.log('deleteFactoryKey');
 
+    if(!confirm("정말로 삭제 하시겠습니까?")){
+      $scope.warning = 'no confirm';
+      return;
+    }
+
+    var response = get_list_from_server($http, {
+      cmd: 'DELETE_DATA',
+      params: {
+        ftk_uid:uid,
+        table_name:'factory_key'
+      }
+    }, function(response) {
+
+      location.reload();
+
+
+    },fail_process);
+  }
+  $scope.modifyFactoryKey = function() {
+    init_event($scope);
+    console.log('modifyFactoryKey', $scope.factory_key.factory_key_rtl);
+
+    hashvalue = cal_hash($scope.factory_key.factory_key_id + $scope.factory_key.factory_key_rtl);
+    console.log($scope.factory_key);
+
+    //
+    // if ($scope.hash_value == hashvalue) {
+    //   $scope.warning = 'not change value';
+    //
+    //   return;
+    // }
+    // if (hashvalue == '') {
+    //   $scope.warning = 'must be filled ';
+    //
+    //   return;
+    // }
+
+
+    // if ($scope.factory_key.factory_key == "") {
+    //   $scope.warning = 'factory_key_rtl is empty';
+    //
+    //   return;
+    // }
+    if(!confirm("정말로 수정하시겠습니까?")){
+      $scope.warning = 'no confirm';
+      return;
+    }
+
+
+
+    var response = get_list_from_server($http, {
+      cmd: 'UPDATE_DATA',
+      params: {
+        ftk_uid:$scope.factory_key.ftk_uid,
+        factory_key_id:$scope.factory_key.factory_key_id,
+        factory_key:$scope.factory_key.factory_key,
+        table_name:'factory_key'
+
+      }
+    }, function(response) {
+      console.log('test','test2');
+//      console.log('setCookie',$scope.factory_key.factory_key_rtl);
+//      setCookie('factory_key_rtl',$scope.factory_key.factory_key_rtl,1);
+
+//      console.log('getCookie',getCookie('factory_key_rtl'));
+
+
+      //document.cookie="factory_key_rtl="$scope.factory_key.factory_key_rtl;
+
+      location.reload();
+
+
+    },fail_process);
+
+
+
+  }
   $scope.modifyCompany = function() {
     init_event($scope);
-    console.log('modifyCompany');
+    console.log('modifyCompany',$scope.ogi_uid);
 
 
-    ftk_uid = $scope.selectedName.ftk_uid;
-    $scope.ftk_uid = ftk_uid;
 
 
     hashname = get_Hash_name($scope.list_comp_names);
@@ -262,42 +333,80 @@ function mainController($scope, $window, $http) {
       $scope.warning = "변경된 값이 없습니다.";
       return;
     }
+
     console.log($scope.company_hashname);
 
+    update_organization_info = function(ftk_uid){
+      params = {
+        table_name: 'organization_info',
+        ogi_uid: $scope.ogi_uid,
+        ftk_uid:ftk_uid,
+        org_code: $scope.org_code,
+        org_name: $scope.org_name,
+        description: $scope.description,
+        url: $scope.url,
+        url_img: $scope.url_img,
 
-    params = {
-      table_name: 'organization_info',
-      ogi_uid: $scope.ogi_uid,
-      org_code: $scope.org_code,
-      ftk_uid: ftk_uid,
-      org_name: $scope.org_name,
-      description: $scope.description,
-      url: $scope.url,
-      url_img: $scope.url_img,
 
+      }
+    get_list_from_server($http,
+      {   cmd: 'UPDATE_DATA',      params: params  },
+      function(response) {
+        console.log(response.data);
+        $scope.list_urls = response.data.list_params;
+        if (response.data.result == "OK") {
+          //location.reload();
+          //page_refreash($scope,$scope.max_page,'compnay_page');
+          setCookie($scope.cookie_name, $scope.max_page + 1);
+          location.reload();
+        }
+
+
+
+      }, fail_process);
+  }
+
+   if(!$scope.ogi_uid){
+      get_list_from_server($http, {
+        cmd: 'UPDATE_DATA',
+        params: {    table_name: 'factory_key',    ftk_uid:"",   }
+      }, function(response) {
+        console.log(response.data);
+        $scope.list_urls = response.data.list_params;
+        if (response.data.result == "OK") {
+          //location.reload();
+          //page_refreash($scope,$scope.max_page,'compnay_page');
+          console.log(response.data.params.ftk_uid);
+          update_organization_info(response.data.params.ftk_uid);
+
+
+
+        }
+
+
+
+      }, fail_process);
 
     }
-    console.log(params);
-
-
-    get_list_from_server($http, {
-      cmd: 'UPDATE_DATA',
-      params: params
-    }, function(response) {
-      console.log(response.data);
-      $scope.list_urls = response.data.list_params;
-      if (response.data.result == "OK") {
-        //location.reload();
-        //page_refreash($scope,$scope.max_page,'compnay_page');
-        setCookie($scope.cookie_name, $scope.max_page + 1);
-        location.reload();
-      }
+    else {
+      update_organization_info($scope.ftk_uid);
+    }
 
 
 
-    }, fail_process);
+
+
+    //console.log(params);
+
+
+
+
+
+
 
   }
+
+
 	$scope.deleteCompany = function(uid) {
     init_event($scope);
 
@@ -440,24 +549,13 @@ function mainController($scope, $window, $http) {
     console.log(
       'update_scope_company', company_info
     );
-
-    $scope.ogi_uid = company_info.ogi_uid;
-    $scope.org_code = company_info.org_code;
-    $scope.ftk_uid = company_info.ftk_uid;
-    $scope.org_name = company_info.org_name;
+    $scope.company_info = company_info;
+    $scope.company_info_org = JSON.parse(JSON.stringify(company_info));
 
     console.log($scope.map_list_factory_key);
     console.log(company_info.ftk_uid);
 
-    console.log($scope.selectedName);
 
-    $scope.selectedName = $scope.map_list_factory_key[company_info.ftk_uid];
-    console.log($scope.selectedName);
-
-
-    $scope.description = company_info.description;
-    $scope.url = company_info.url;
-    $scope.url_img = company_info.url_img;
     console.log(
       'test 2',
       $scope.showCompanyForm

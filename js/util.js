@@ -317,21 +317,24 @@ function get_naviinfo() {
 
     if (/Windows/.test(os)) {
         osVersion = /Windows (.*)/.exec(os)[1];
-        os = 'Windows';
+        os = 'windows';
     }
 
     switch (os) {
         case 'Mac OS X':
             osVersion = /Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1];
+						os = 'mac_os_x';
             break;
 
         case 'Android':
             osVersion = /Android ([\.\_\d]+)/.exec(nAgt)[1];
+						os = 'android';
             break;
 
         case 'iOS':
             osVersion = /OS (\d+)_(\d+)_?(\d+)?/.exec(nVer);
             osVersion = osVersion[1] + '.' + osVersion[2] + '.' + (osVersion[3] | 0);
+						os = 'ios';
             break;
     }
 

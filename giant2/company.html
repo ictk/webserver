@@ -122,11 +122,27 @@ li {
 
         <br>
           <label>name:</label>
-          <input class="w3-input w3-border" type="text" ng-model="org_name" ng-disabled="!check_save" >
+          <input class="w3-input w3-border" type="text" ng-model="company_info.org_name" ng-disabled="!check_save" >
         <br>
 
           <label>code:</label>
-          <input class="w3-input w3-border" type="text" ng-model="org_code" ng-disabled="!check_save" >
+          <input class="w3-input w3-border" type="text" ng-model="company_info.org_code" ng-disabled="!check_save" >
+        <br>
+
+        <label>Ndef Option:</label>
+        <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.ndef_option" placeholder="Ndef Option">
+        <br>
+        <label>Factory Key ID:</label>
+        <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.factory_key_id" placeholder="Factory Key ID">
+        <br>
+
+
+
+        <label>Factory Key (size:{{factory_key.factory_key.length/2}}/16):</label>
+        <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.factory_key" placeholder="Factory Key">
+        <br>
+        <label>Input Auth (size:{{factory_key.input_auth.length/2}}/9):</label>
+        <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.input_auth" placeholder="Input Auth">
         <br>
 
 
@@ -143,6 +159,8 @@ li {
 
 
         <br>
+
+
 
 
 
@@ -205,7 +223,7 @@ li {
         <input class="w3-input w3-border" type="text" ng-disabled="!isNewFactoryKey" ng-model="factory_key.input_auth" placeholder="Input Auth">
         <br>
 
-        <button class="w3-btn w3-green w3-ripple" ng-click="modify()">&#10004; UPDATE</button>
+        <button class="w3-btn w3-green w3-ripple" ng-click="modifyFactoryKey()">&#10004; UPDATE</button>
         <button class="w3-btn w3-green w3-ripple" ng-disabled="isNewFactoryKey" ng-click="check()">&#10004; CHECK</button>
 
 
