@@ -1,19 +1,18 @@
-function showHideForm($scope, showCompanyList = false, showCompanyForm = false, showUrlForm = false) {
+function showHideForm($scope, showCompanyList = false, showCompanyForm = false, showUrlForm = false,showFactoryKeyForm=false) {
   console.log(
     'showHideForm'
   );
-  console.log(
-    showCompanyList,
-    showCompanyForm,
-    showUrlForm
-  );
+
   $scope.showCompanyList = showCompanyList;
   $scope.showCompanyForm = showCompanyForm;
   $scope.showUrlForm = showUrlForm;
+  $scope.showFactoryKeyForm = showFactoryKeyForm;
 
   console.log(
     $scope.showCompanyList,
     $scope.showCompanyForm,
+    $scope.showUrlForm,
+    $scope.showFactoryKeyForm
   );
   $scope.showUrlForm
 
@@ -43,7 +42,7 @@ function mainController($scope, $window, $http) {
     console.log('compnay_page', $scope.page);
     console.log('test2', getCookie('test2'));
 
-    get_list_data($scope, $http, 'organization_info', '', 'ogi_uid', function() {
+    get_list_data($scope, $http, 'view_organization_info', '', 'ogi_uid', function() {
       $scope.list_company = $scope.list_data;
       $scope.map_list_company = $scope.map_list_data;
       console.log('map_list_company', $scope.map_list_company);
@@ -85,66 +84,6 @@ function mainController($scope, $window, $http) {
     }, fail_process);
 
 
-    //
-    //
-    //   $http.post('/giant_se/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_COMAPANY_NO',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
-    // //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
-    //   .then(function (response) {
-    //     console.log('get_company_list');
-    //     console.log(response.data);
-    //
-    // 		$scope.list_company =response.data.list_params;
-    // 		console.log('test',response.data.list_params);
-    // 		console.log('test',$scope.list_company);
-    //
-    // 		$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
-    // 		console.log('test 1',$scope.map_list_company);
-    //
-    //   },function errorCallback(response) {
-    //     $scope.warning = response.status;
-    //   }
-    // );
-    //
-    // $http.post('/giant_se/admin.do', $.param({json:JSON.stringify( {cmd : 'LIST_FACTORY_KEY_ID',params : {}	})} ) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
-    // //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
-    // .then(function (response) {
-    // 	console.log('get_company_list');
-    // 	console.log(response.data);
-    //
-    // 	$scope.list_company =response.data.list_params;
-    // 	console.log('test',response.data.list_params);
-    // 	console.log('test',$scope.list_company);
-    //
-    // 	$scope.map_list_company = make_map_from_list($scope.list_company,'ogi_uid');
-    // 	console.log('test 1',$scope.map_list_company);
-    //
-    // },function errorCallback(response) {
-    // 	$scope.warning = response.status;
-    // }
-    // );
-    //
-    // $http.post('dbhandler.php', $.param({option:'get_factory_key_list'}) ,{ headers : {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'}})
-    // //$http.get("/giant_auth/admin?cmd=MODIFY_MASTERKEY_CHIP&sn="+$scope.sn+"&msk_uid="+msk_uid)
-    // .then(function (response) {
-    // 	console.log('get_contents');
-    // 	console.log(response.data);
-    // 	$.each(response.data.list_params, function( index, value ) {
-    // 		//$('#org_code_select').append(String.format("<li class='select_comp'><a href='#' id='{0}' class='org_code_option' >{1}</a></li>",value.org_code,value.name));
-    // 		console.log(value);
-    // 	});
-    // 	$scope.list_factory_key =response.data.list_contents;
-    //
-    // 	$scope.map_list_factory_key = make_map_from_list($scope.list_factory_key,'ftk_uid');
-    //
-    //
-    //
-    //
-    // },function errorCallback(response) {
-    // 	$scope.warning = response.status;
-    // }
-    // );
-
-
 
 
   }
@@ -154,6 +93,23 @@ function mainController($scope, $window, $http) {
     //$scope.edit = true;
 
   }
+  $scope.editable_factory_key = function() {
+    console.log('editable_factory_key');
+    console.log('editable_factory_key', $scope.isNewFactoryKey);
+    if($scope.isNewFactoryKey){
+      $scope.factory_key.factory_key ="";
+      $scope.factory_key.input_auth ="";
+    }
+    else{
+      $scope.factory_key.factory_key =$scope.factory_key_org.factory_key;
+      $scope.factory_key.input_auth =$scope.factory_key_org.input_auth;
+
+    }
+
+    //$scope.edit = true;
+
+  }
+
 
   $scope.editCompany = function(uid) {
     init_event($scope);
@@ -192,6 +148,11 @@ function mainController($scope, $window, $http) {
           indent: '',
           store: ''
         },
+        {
+          type: 'windows',
+          indent: '',
+          store: ''
+        },
       ];
 
 
@@ -201,23 +162,7 @@ function mainController($scope, $window, $http) {
 
       update_scope_company(company_info);
 
-      // get_list_from_server($http,{cmd : 'GET_COMPANY_INFO',params : {ogi_uid:uid}	} ,function(response) {
-      // 	console.log(response.data);
-      // 	update_scope_company(response.data.params);
-      //
-      //
-      // },fail_process);
-      //
-
-
     }
-
-
-
-
-
-
-
 
 
   }
@@ -243,7 +188,10 @@ function mainController($scope, $window, $http) {
       }
     }, function(response) {
       console.log(response.data);
+  
+
       $scope.list_urls = response.data.list_params;
+
       $scope.hash_intent_input = get_hash_intent();
       // if(response.data.result != "OK"){
       // 	$scope.warning =  response.data.error;
@@ -252,6 +200,50 @@ function mainController($scope, $window, $http) {
 
 
     }, fail_process);
+
+  }
+  $scope.editFactoryKey = function(uid) {
+
+    console.log('editFactoryKey',uid);
+    init_event($scope);
+    showHideForm($scope,showCompanyList = false, showCompanyForm = false, showUrlForm = false, showFactoryKeyForm = true);
+    console.log('editFactoryKey',uid);
+    $scope.factory_key = {
+      ftk_uid: '',
+      ndef_option: '',
+      factory_key_id: '',
+      factory_key: '',
+      input_auth: ''
+
+    };
+
+
+    var response = get_list_from_server($http, {
+      cmd: 'LIST_DATA',
+      params: {
+        ftk_uid:uid,
+        table_name:'factory_key',
+        type:'uid'
+
+      }
+    }, function(response) {
+        if(response.data.list_params.length>0){
+          $scope.factory_key = response.data.list_params[0];
+          $scope.factory_key_org = JSON.parse(JSON.stringify($scope.factory_key));
+          $scope.isNewFactoryKey = false;
+        }
+        else{
+          $scope.isNewFactoryKey = true;
+        }
+        console.log('editFactoryKey result',$scope.factory_key);
+
+
+    },fail_process);
+    console.log('editFactoryKey',$scope.factory_key);
+
+
+    $scope.isNewFactoryKey = (uid == '');
+
 
   }
 

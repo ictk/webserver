@@ -40,7 +40,14 @@
 					});
 
 		};
-		function ajax_templtate( sublet_address, json_function,		succes_function) {
+		function ajax_templtate( sublet_address, json_function,		succes_function,
+			fail_function=function(data){
+					if(data.result != 'OK'){
+						alert("실패:"+data.error);
+						return;
+					}
+				}
+			) {
 
 				var jsoncontents = json_function();
 				console.log("snd:",jsoncontents);
@@ -56,8 +63,10 @@
 					success :
 						function(data) {
 						console.log("rcv:",data);
+
 						if(data.result != 'OK'){
-							alert("실패:"+data.error);
+							fail_function(data);
+							//alert("실패:"+data.error);
 							return;
 						}
 
