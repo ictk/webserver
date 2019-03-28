@@ -128,7 +128,7 @@ function get_list_data($scope,$http,table_name,type,uid_name,process){
 function init_body($scope) {
 	$scope.map_link={
 		company:{name:'ORG ADMIN',link:'company.html'},
-		factory_key:{name:'FACTORY KEY ADMIN',link:'factory_key.html'},
+		//factory_key:{name:'FACTORY KEY ADMIN',link:'factory_key.html'},
     chip:{name:'CHIP ADMIN',link:'chip.html'},
     simregauth:{name:'SIMUL REG and AUTH',link:'sim_reg.html'},
     event_record:{name:'EVENT RECORD',link:'event_record.html'},

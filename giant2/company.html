@@ -109,12 +109,13 @@ li {
       <button class="w3-btn w3-green w3-ripple" ng-click="editCompany('')">&#9998; ORG INFO INPUT</button>
 
       <form ng-show="showCompanyForm" class="w3-container" id="div_input" name="div_input">
-        <h3 ng-show="form_type=='new'">Insert New chip:</h3>
-        <h3 ng-show="form_type=='update'">Update Master Key:</h3>
+        <h2 ng-show="form_type=='new'">INSERT </h2>
+        <h2 ng-show="form_type=='update'">UPDATE</h2>
 
         <label>modify:
           <input type="checkbox" ng-model="check_save" ng-click="editable()">
         </label><br/>
+        <h3>ORGINZATION INFO</h3>
 
         <br>
           <label>name:</label>
@@ -123,7 +124,28 @@ li {
 
           <label>code:</label>
           <input class="w3-input w3-border" type="text" ng-model="company_info.org_code" ng-disabled="!check_save" >
+
         <br>
+            <label>URL</label>
+            <input class="w3-input w3-border" type="text" ng-model="company_info.url" ng-disabled="!check_save" >
+
+
+        <br>
+            <button class="w3-button w3-white w3-border w3-border-gray  w3-round-large" ng-disabled="!check_save" ng-click="is_org_folderble=!is_org_folderble" > 기타 정보 토글 </button>
+      <div ng-show="is_org_folderble">
+            <label>description</label>
+            <input class="w3-input w3-border" type="text" ng-model="company_info.description" ng-disabled="!check_save">
+
+        <br>
+            <label>image url</label>
+            <input class="w3-input w3-border" type="text" ng-model="company_info.url_img" ng-disabled="!check_save">
+
+        </div>
+
+        <br>
+        <br>
+        <h3>FACTORY KEY</h3>
+
 
         <label>Ndef Option:</label>
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.ndef_option" placeholder="Ndef Option">
@@ -132,37 +154,33 @@ li {
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.factory_key_id" placeholder="Factory Key ID">
         <br>
 
+        <button class="w3-button w3-white w3-border w3-border-gray  w3-round-large" ng-disabled="!check_save" ng-click="is_fk_folderble=!is_fk_folderble" > Factory Key 계산 보이기  </button>
 
 
+
+        <div ng-show="!is_fk_folderble">
         <label>Factory Key (size:{{company_info.factory_key.length/2}}/16):</label>
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.factory_key" placeholder="Factory Key">
         <br>
+
         <label>Input Auth (size:{{company_info.input_auth.length/2}}/9):</label>
         <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="company_info.input_auth" placeholder="Input Auth">
+        </div>
+
+        <div ng-show="is_fk_folderble">
+        <label>Factory Key RTL(size:{{factory_key_rtl.length/2}}/16):<p style="color:red">(NEVER SAVE IN SERVER)</p></label>
+        <input class="w3-input w3-border" type="text" ng-disabled="!check_save" ng-model="factory_key_rtl" placeholder="Factory Key RTL">
+        <button class="w3-btn w3-gray w3-ripple" ng-disabled="!check_save" ng-click="fillFactoryKey()" >FILL FACTORY KEY</button>
         <br>
-
-
-            <label>description</label>
-            <input class="w3-input w3-border" type="text" ng-model="company_info.description" ng-disabled="!check_save" >
-
+        </div>
         <br>
-            <label>URL</label>
-            <input class="w3-input w3-border" type="text" ng-model="company_info.url" ng-disabled="!check_save" >
-        <br>
-            <label>image url</label>
-            <input class="w3-input w3-border" type="text" ng-model="company_info.url_img" ng-disabled="!check_save" >
-
-
-
-        <br>
-
-
 
 
 
         <!-- <button class="w3-btn w3-green w3-ripple" ng-click="modifyChip()" ng-disabled="error || incomplete">&#10004; Save Changes</button> -->
         <button class="w3-btn w3-green w3-ripple" ng-disabled="!check_save" ng-click="modifyCompany()" >&#10004; UPDATE</button>
         <button class="w3-btn w3-green w3-ripple"  ng-click="editIndent(company_info.ogi_uid)" >&#x2712; Intent edit</button>
+
 
 
       </form>

@@ -31,6 +31,10 @@ function mainController($scope, $window, $http) {
   $scope.indent_types = ['android', 'ios'];
   $scope.list_comp_names = ['ogi_uid', 'org_code', 'ftk_uid', 'org_name', 'description', 'url', 'url_img']
   $scope.cookie_name = 'compnay_page';
+  $scope.factory_key_rtl ="";
+  $scope.is_org_folderble = false;
+
+
 
   console.log(document.cookie);
   console.log(window.page);
@@ -198,131 +202,7 @@ function mainController($scope, $window, $http) {
     }, fail_process);
 
   }
-  $scope.editFactoryKey = function(uid) {
 
-    console.log('editFactoryKey',uid);
-    init_event($scope);
-    showHideForm($scope,showCompanyList = false, showCompanyForm = false, showUrlForm = false, showFactoryKeyForm = true);
-    console.log('editFactoryKey',uid);
-    $scope.factory_key = {
-      ftk_uid: '',
-      ndef_option: '',
-      factory_key_id: '',
-      factory_key: '',
-      input_auth: ''
-
-    };
-
-
-    var response = get_list_from_server($http, {
-      cmd: 'LIST_DATA',
-      params: {
-        ftk_uid:uid,
-        table_name:'factory_key',
-        type:'uid'
-
-      }
-    }, function(response) {
-        if(response.data.list_params.length>0){
-          $scope.factory_key = response.data.list_params[0];
-          $scope.factory_key_org = JSON.parse(JSON.stringify($scope.factory_key));
-          $scope.isNewFactoryKey = false;
-        }
-        else{
-          $scope.isNewFactoryKey = true;
-        }
-        console.log('editFactoryKey result',$scope.factory_key);
-
-
-    },fail_process);
-    console.log('editFactoryKey',$scope.factory_key);
-
-
-    $scope.isNewFactoryKey = (uid == '');
-
-
-  }
-  $scope.deleteFactoryKey = function(uid) {
-    init_event($scope);
-    console.log('deleteFactoryKey');
-
-    if(!confirm("정말로 삭제 하시겠습니까?")){
-      $scope.warning = 'no confirm';
-      return;
-    }
-
-    var response = get_list_from_server($http, {
-      cmd: 'DELETE_DATA',
-      params: {
-        ftk_uid:uid,
-        table_name:'factory_key'
-      }
-    }, function(response) {
-
-      location.reload();
-
-
-    },fail_process);
-  }
-  $scope.modifyFactoryKey = function() {
-    init_event($scope);
-    console.log('modifyFactoryKey', $scope.factory_key.factory_key_rtl);
-
-    hashvalue = cal_hash($scope.factory_key.factory_key_id + $scope.factory_key.factory_key_rtl);
-    console.log($scope.factory_key);
-
-    //
-    // if ($scope.hash_value == hashvalue) {
-    //   $scope.warning = 'not change value';
-    //
-    //   return;
-    // }
-    // if (hashvalue == '') {
-    //   $scope.warning = 'must be filled ';
-    //
-    //   return;
-    // }
-
-
-    // if ($scope.factory_key.factory_key == "") {
-    //   $scope.warning = 'factory_key_rtl is empty';
-    //
-    //   return;
-    // }
-    if(!confirm("정말로 수정하시겠습니까?")){
-      $scope.warning = 'no confirm';
-      return;
-    }
-
-
-
-    var response = get_list_from_server($http, {
-      cmd: 'UPDATE_DATA',
-      params: {
-        ftk_uid:$scope.factory_key.ftk_uid,
-        factory_key_id:$scope.factory_key.factory_key_id,
-        factory_key:$scope.factory_key.factory_key,
-        table_name:'factory_key'
-
-      }
-    }, function(response) {
-      console.log('test','test2');
-//      console.log('setCookie',$scope.factory_key.factory_key_rtl);
-//      setCookie('factory_key_rtl',$scope.factory_key.factory_key_rtl,1);
-
-//      console.log('getCookie',getCookie('factory_key_rtl'));
-
-
-      //document.cookie="factory_key_rtl="$scope.factory_key.factory_key_rtl;
-
-      location.reload();
-
-
-    },fail_process);
-
-
-
-  }
   $scope.modifyCompany = function() {
     init_event($scope);
     console.log('modifyCompany',$scope.ogi_uid);
@@ -332,10 +212,6 @@ function mainController($scope, $window, $http) {
 
     hashname = get_Hash_name($scope.list_comp_names);
 
-    // if ($scope.company_hashname == hashname) {
-    //   $scope.warning = "변경된 값이 없습니다.";
-    //   return;
-    // }
 
     console.log($scope.company_hashname);
 
@@ -365,61 +241,12 @@ function mainController($scope, $window, $http) {
           //location.reload();
           //page_refreash($scope,$scope.max_page,'compnay_page');
           setCookie($scope.cookie_name, $scope.max_page + 1);
-          //location.reload();
+          location.reload();
         }
 
 
 
       }, fail_process);
-
-  // params_factory_key = {
-  //   table_name: 'factory_key',
-  //   ogi_uid: $scope.ogi_uid,
-  //   ftk_uid:ftk_uid,
-  //   org_code: $scope.org_code,
-  //   org_name: $scope.org_name,
-  //   description: $scope.description,
-  //   url: $scope.url,
-  //   url_img: $scope.url_img,
-  //
-  //
-  // }
-  //  if($scope.company_info.ftk_uid==""){
-  //     get_list_from_server($http, {
-  //       cmd: 'UPDATE_DATA',
-  //       params: {    table_name: 'factory_key',    ftk_uid:"",   }
-  //     }, function(response) {
-  //       console.log(response.data);
-  //       $scope.list_urls = response.data.list_params;
-  //       if (response.data.result == "OK") {
-  //         //location.reload();
-  //         //page_refreash($scope,$scope.max_page,'compnay_page');
-  //         console.log(response.data.params.ftk_uid);
-  //         update_organization_info(response.data.params.ftk_uid);
-  //
-  //
-  //
-  //       }
-  //
-  //
-  //
-  //     }, fail_process);
-  //
-  //   }
-  //   else {
-  //     update_organization_info($scope.ftk_uid);
-  //   }
-
-
-
-
-
-    //console.log(params);
-
-
-
-
-
 
 
   }
@@ -440,8 +267,8 @@ function mainController($scope, $window, $http) {
 
 
 		get_list_from_server($http, {
-			cmd: 'DELETE_DATA',
-			params: {table_name: 'organization_info',ogi_uid: uid}
+			cmd: 'DELETE_ORGANIZATION',
+			params: {ogi_uid: uid}
 		}, function(response) {
 			console.log(response.data);
 			$scope.list_urls = response.data.list_params;
@@ -534,6 +361,32 @@ function mainController($scope, $window, $http) {
     init_event($scope);
     console.log('toggle');
     showHideForm($scope, showCompanyList = true, showCompanyForm = false, showUrlForm = false);
+
+
+
+  }
+  $scope.fillFactoryKey = function() {
+    init_event($scope);
+    $scope.company_info
+
+    console.log('fillFactoryKey',$scope.factory_key_rtl);
+
+    get_list_from_server($http, {
+      cmd: 'CALC_FACTORY_KEY_INFO',
+      params: {
+        ndef_option: $scope.company_info.ndef_option,
+        factory_key_id:$scope.company_info.factory_key_id,
+        factory_key_rtl:$scope.factory_key_rtl
+      }
+    }, function(response) {
+      console.log(response.data);
+
+      $scope.company_info.factory_key= response.data.params.factory_key;
+      $scope.company_info.input_auth= response.data.params.input_auth;
+      $scope.is_fk_folderble = false;
+
+
+    }, fail_process);
 
 
 
