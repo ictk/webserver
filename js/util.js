@@ -42,10 +42,8 @@
 		};
 		function ajax_templtate( sublet_address, json_function,		succes_function,
 			fail_function=function(data){
-					if(data.result != 'OK'){
+
 						alert("실패:"+data.error);
-						return;
-					}
 				}
 			) {
 

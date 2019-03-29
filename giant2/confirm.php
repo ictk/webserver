@@ -131,7 +131,13 @@ $auth_code= $_REQUEST["auth_code"];
 
 
 
-        });
+        },
+          function(data){
+              $('#confirm_status').text("실패:"+data.error);
+  						
+  				}
+
+      );
 
       console.log(sn);
 

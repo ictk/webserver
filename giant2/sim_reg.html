@@ -47,6 +47,8 @@
     angular.module('myApp', []).controller('userCtrl', ['$scope', '$window','$http',mainController]);
 
 
+
+
     </script>
 
 
@@ -109,33 +111,36 @@
           <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
         </select>
         <label>factory_key_id:</label>
-          <input class="w3-input w3-border" type="text" ng-model="factory_key_id"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="factory_key_id" readonly >
+        <br>
+        <label>input_auth:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="input_auth" readonly >
         <br>
         <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_factory_key_id()" >&#10004; get FACTORY KEY ID(from server)</button><br><br>
 
 
 
         <label>NONCE:</label>
-					<input class="w3-input w3-border" type="text" ng-model="nonce"  >
+					<input class="w3-input w3-border input_readonly" type="text" ng-model="nonce"  readonly>
 				<br>
         <label>CIPHER:</label>
-          <input class="w3-input w3-border" type="text" ng-model="cipher"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="cipher" readonly >
         <br>
         <label>MAC:</label>
-          <input class="w3-input w3-border" type="text" ng-model="mac"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="mac" readonly >
         <br>
         <button class="w3-btn w3-green w3-ripple"  ng-click="get_reg_key()" >&#10004; get reg key (from chip)</button>
         <br><br>
 
 
         <label>calc mac from server:</label>
-          <input class="w3-input w3-border" type="text" ng-model="calc_mac"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="calc_mac"  readonly>
         <br>
         <label>RESULT:</label>
-          <input class="w3-input w3-border" type="text" ng-model="result"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="result" readonly >
         <br>
         <label>ERROR:</label>
-          <input class="w3-input w3-border" type="text" ng-model="error"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="error" readonly >
         <br>
         <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_calc_mac()" >&#10004; register (from server)</button>
 
@@ -144,41 +149,54 @@
       <hr>
       <button class="w3-btn  w3-ripple"  ng-click="toggle('showAuth')" > auth page >></button>
 
-      <form ng-show="showAuth" class="w3-container" id="div_input" name="div_input">
+      <form ng-show="showAuth" class="w3-container" id="div_input" name="div_input" >
         <h2>auth form</h2>
 
         <label>RANDOM:</label>
-          <input class="w3-input w3-border" type="text" ng-model="random"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="random"  readonly>
         <br>
-        <label>RANDOM SERVER:</label>
-          <input class="w3-input w3-border" type="text" ng-model="random_server"  >
         <br>
         <button class="w3-btn w3-khaki w3-ripple"  ng-click="get_random_values()" >&#10004;get  RANDOM VALUES (from server)</button>
         <br><br>
 
 
-        <label>CIPHER:</label>
-          <input class="w3-input w3-border" type="text" ng-model="cipher_auth"  >
+        <label>SN:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.sn" readonly >
         <br>
-        <label>MAC:</label>
-          <input class="w3-input w3-border" type="text" ng-model="mac_auth"  >
+        <label>RANDOM:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.random" readonly >
         <br>
+        <label>AUTHCODE:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.auth_code" readonly >
+        <br>
+        <label>URL:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.url"  readonly>
+        <br>
+
+
         <button class="w3-btn w3-green w3-ripple"  ng-click="get_authentication()" >&#10004; get auth info (from chip)</button>
         <br><br>
 
 
         <label>calc mac from server:</label>
-          <input class="w3-input w3-border" type="text" ng-model="calc_mac_auth"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="auth_result.calc_auth_code"  readonly>
         <br>
         <label>RESULT:</label>
-          <input class="w3-input w3-border" type="text" ng-model="result_auth"  >
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="auth_result.confirm_result" readonly >
         <br>
-        <label>ERROR:</label>
-          <input class="w3-input w3-border" type="text" ng-model="error_auth"  >
-        <br>
-        <button class="w3-btn w3-khaki w3-ripple"  ng-click="req_athentication()" >&#10004; authenticate (from server)</button>
-        <br><br>
 
+        <label>REDIRECT:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="auth_result.redirect_url" readonly >
+        <br>
+        <label>IS_INTENT:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="auth_result.is_intent"  readonly>
+        <br>
+
+        <button class="w3-btn w3-khaki w3-ripple "  ng-click="req_athentication()" >&#10004; authenticate (from server)</button>
+        <br>
+
+        <button class="w3-btn w3-yellow w3-ripple "  ng-click="auto_auth()" >&#10004; chip auth and server auth</button>
+        <br><br>
 
 
 

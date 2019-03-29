@@ -18,7 +18,7 @@
     <!-- <li><a href="giant_se/">giant_se</a></li>
     <li><a href="giant_se/auth.do">auth</a></li> -->
 		<li><a href="/giant2/company.html">GIANT 2 업체등록</a></li>
-		<li><a href="/giant2/factory_key.html">GIANT 2 팩토리키관리</a></li>
+		
 		<li><a href="/giant2/issue_info.html">발급 정보</a></li>
     <li><a href="/giant2/sim_reg.html">칩 등록 및 인증</a></li>
 		<li><a href="/giant2/event_record.html">인증기록</a></li>
