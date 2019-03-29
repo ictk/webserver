@@ -171,12 +171,22 @@
         <label>AUTHCODE:</label>
           <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.auth_code" readonly >
         <br>
-        <label>URL:</label>
-          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.url"  readonly>
-        <br>
+
 
 
         <button class="w3-btn w3-green w3-ripple"  ng-click="get_authentication()" >&#10004; get auth info (from chip)</button>
+        <br>
+
+        <label>URL:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.url"  readonly>
+          <button class="w3-btn w3-gray w3-ripple"  ng-click="go_url('http://'+chip_auth.url)" >&#10004; 바로이동</button>
+          <br>
+        <label>REL URL:</label>
+          <input class="w3-input w3-border input_readonly" type="text" ng-model="chip_auth.rel_url"  readonly>
+          <button class="w3-btn w3-gray w3-ripple"  ng-click="go_url(chip_auth.rel_url)" >&#10004; 바로이동</button>
+          <!-- <a href='{{chip_auth.url}}'>{{''+chip_auth.url}}</a>
+          <a href='{{chip_auth.rel_url}}'>{{chip_auth.rel_url}}</a> -->
+        <br>
         <br><br>
 
 

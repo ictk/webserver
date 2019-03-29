@@ -202,6 +202,7 @@ $scope.get_authentication= function() {
 	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'AUTHENTICATION',params : {random:$scope.random}	} ,function(response) {
 		console.log(response.data);
 		$scope.chip_auth = response.data.params;
+		$scope.chip_auth.rel_url= '/'+$scope.chip_auth.ascii_sn+'/'+$scope.chip_auth.ascii_random+'/'+$scope.chip_auth.ascii_auth_code;
 		$scope.auth_status = "CHIP_AUTH";
 
 		//alert("성공");
@@ -271,11 +272,12 @@ $scope.auto_auth= function() {
 	interval = setInterval(status_check_function,10);
 
 }
-$scope.sample= function() {
+$scope.go_url= function(url) {
 	init_event($scope);
-	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'GET_SN',params : {}	} ,function(response) {
-		console.log(response.data);
-	},fail_process);
+	var win = window.open(url, '_blank');
+  win.focus();
+	// console.log(url);
+	// document.location=url;
 
 }
 $scope.sample= function() {
