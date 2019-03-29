@@ -73,6 +73,12 @@
             <label>FACTORY KEY RTL:</label>
             <input class="w3-input w3-border" type="text" ng-model="factory_key_rtl"  >
 
+            <label>select org:</label>
+            <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_code for value in list_company">
+              <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
+            </select>
+
+
           <!-- <br>
           <button class="w3-btn w3-yellow w3-ripple"  ng-click="generate()" > 칩 피쳐 발생</button> -->
           <br>
@@ -106,10 +112,6 @@
       <form ng-show="showReg" class="w3-container" id="div_input" name="div_input">
         <h2>reg form</h2>
 
-        <label>select org:</label>
-        <select class="w3-input w3-border" ng-model="selectedName"  ng-options="value.org_code for value in list_company">
-          <!-- <option ng-repeat="(key,value) in master_keys" ng-value="value">{{key}}</option> -->
-        </select>
         <label>factory_key_id:</label>
           <input class="w3-input w3-border input_readonly" type="text" ng-model="factory_key_id" readonly >
         <br>

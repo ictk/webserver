@@ -41,9 +41,10 @@ console.log(window.page);
 $scope.bodyInit= function() {
 	console.log('bodyInit');
 	$scope.page = getCookie($scope.cookie_name);
-	var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {type:'all',table_name:'organization_info'}	} ,function(response) {
+	var response = get_list_from_server($http,{cmd : 'LIST_DATA',params : {type:'all',table_name:'view_organization_info'}	} ,function(response) {
 
 		$scope.list_company =response.data.list_params;
+		$scope.map_company =make_map_from_list($scope.list_company,'org_code');
 
 
 
@@ -87,7 +88,19 @@ $scope.set_feature= function() {
 	$scope.sn=	"";
 	$scope.ascii_sn=	"";
 	console.log('set_feature');
-	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'SET_FEATURE',params : {puf:$scope.puf,factory_key_rtl:$scope.factory_key_rtl}	} ,
+	if($scope.selectedName == null){
+		alert("기관이 선택되어야 합니다. ")
+		return;
+	}
+	org_code = $scope.selectedName.org_code;
+
+	console.log('map_company',$scope.map_company,$scope.map_company[org_code]);
+
+	ndef_option = $scope.map_company[org_code].ndef_option;
+	do_from_server($http,'/giant_se/sim_chip.do',{cmd : 'SET_FEATURE',params : {
+		puf:$scope.puf,
+		factory_key_rtl:$scope.factory_key_rtl,
+	ndef_option:ndef_option}	} ,
 	function(response) {
 		console.log(response.data);
 		$scope.factory_key_rtl=	"";
@@ -127,8 +140,10 @@ $scope.get_factory_key_id= function() {
 	console.log('get_factory_key_id');
 	console.log($scope.selectedName);
 	if($scope.selectedName == null){
+		alert("기관이 선택되어야 합니다. ")
 		return;
 	}
+
 	do_from_server($http,'/giant_se/reg.do',{cmd : 'FACTORY_KEY_ID',params : {sn:$scope.sn,org_code:$scope.selectedName.org_code}	} ,function(response) {
 		console.log(response.data);
 		$scope.factory_key_id = response.data.params.factory_key_id;
